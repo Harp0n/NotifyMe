@@ -1,3 +1,4 @@
+@SuppressWarnings("unused")
 
 public class Notify {
 
@@ -20,6 +21,19 @@ public class Notify {
 
     private int soundVolume;
 
+
+    public Notify()
+    {
+        this.setID(this.hashCode());
+    }
+
+
+
+
+
+
+    ///////////////////////////// Settery gettery toString - nic ważnego //////////////////////////
+    //======================================================================================//////
 
     public String getName() {
         return name;
@@ -107,11 +121,6 @@ public class Notify {
 
     public void setSoundVolume(int soundVolume) {
         this.soundVolume = soundVolume;
-    }
-
-    public Notify()
-    {
-        this.setID(this.hashCode());
     }
 
     public int getID() {
