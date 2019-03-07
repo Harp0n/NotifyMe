@@ -5,6 +5,11 @@ public class Notify {
 
     private int ID;
 
+    private double x_coordinate;
+    private double y_coordinate;
+
+    private double radius;
+
     private String name;
     private String discription;
     private String notificationMessage;
@@ -33,7 +38,7 @@ public class Notify {
 
 
     ///////////////////////////// Settery gettery toString - nic ważnego //////////////////////////
-    //======================================================================================//////
+    //======================================================================================///////
 
     public String getName() {
         return name;
@@ -131,9 +136,29 @@ public class Notify {
         this.ID = ID;
     }
 
+    public double getX_coordinate() {
+        return x_coordinate;
+    }
 
+    public void setX_coordinate(double x_coordinate) {
+        this.x_coordinate = x_coordinate;
+    }
 
+    public double getY_coordinate() {
+        return y_coordinate;
+    }
 
+    public void setY_coordinate(double y_coordinate) {
+        this.y_coordinate = y_coordinate;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
 
     @Override
     public String toString() {
