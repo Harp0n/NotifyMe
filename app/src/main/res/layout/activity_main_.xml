@@ -6,21 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".Main_Activity">
 
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="86dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Create notify"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbEditor"
+        android:layout_width="94dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
+        app:srcCompat="@drawable/ic_add" />
+
+    <ExpandableListView
+        android:id="@+id/expList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
+
 </android.support.constraint.ConstraintLayout>
