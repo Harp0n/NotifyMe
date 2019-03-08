@@ -1,3 +1,5 @@
+package com.harp0n.notifyme;
+
 public class Serialization {
 
     public static void save() {

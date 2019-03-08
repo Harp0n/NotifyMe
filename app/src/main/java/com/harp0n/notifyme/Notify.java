@@ -1,3 +1,5 @@
+package com.harp0n.notifyme;
+
 @SuppressWarnings("unused")
 
 public class Notify {
