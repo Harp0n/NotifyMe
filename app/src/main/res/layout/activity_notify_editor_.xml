@@ -6,26 +6,221 @@
     android:layout_height="match_parent"
     tools:context=".NotifyEditor_Activity">
 
-    <ScrollView
-        android:layout_width="395dp"
-        android:layout_height="715dp"
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="115dp"
+        android:layout_height="89dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:text="BACK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNext"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.751" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="115dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="8dp"
+        android:text="Create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.751" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="395dp"
+        android:layout_height="477dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.033">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNotifyName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Set name to your Notify:"
+                android:textSize="30sp"
+                tools:text="Set name to your Notify:" />
+
+            <EditText
+                android:id="@+id/et_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                tools:text="Notify Name" />
+
+            <TextView
+                android:id="@+id/tvNotifyDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Set description to your notify:"
+                android:textSize="30sp"
+                tools:text="Set description to your notify:" />
+
+            <EditText
+                android:id="@+id/et_Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                tools:text="Notify Description" />
+
+            <TextView
+                android:id="@+id/tvNotifyMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Set Notify message:"
+                android:textSize="30sp"
+                tools:text="Set Notify message:" />
+
+            <EditText
+                android:id="@+id/et_NotifyMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                tools:text="Notify Message" />
+
+            <Switch
+                android:id="@+id/switchIsOneTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notify me One/Many times"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notify options (Click if you want to apply it):"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/btnVolume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VOLUME CHANGES"
+                tools:layout_editor_absoluteX="130dp"
+                tools:layout_editor_absoluteY="193dp" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnWifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wifi Changes:" />
+
+            <Switch
+                android:id="@+id/switchWifi"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:text="Wifi should be:"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <Button
+                android:id="@+id/btnBluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bluetooth Changes" />
+
+            <Switch
+                android:id="@+id/switchBluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:text="Bluetooth should be:"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <Button
+                android:id="@+id/btnPhoneData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone data:" />
+
+            <Switch
+                android:id="@+id/switchPhoneData"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:text="Phone data should be:"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <Button
+                android:id="@+id/btnPlaneMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plane mode" />
+
+            <Switch
+                android:id="@+id/switchPlaneMode"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:text="Plane mode should be:"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <Button
+                android:id="@+id/btnAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="aLARM" />
+
+            <Switch
+                android:id="@+id/swtichAlarmOn"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:text="Alarm should be:"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+        </LinearLayout>
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
