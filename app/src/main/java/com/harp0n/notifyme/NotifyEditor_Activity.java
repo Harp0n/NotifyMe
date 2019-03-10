@@ -8,7 +8,7 @@ import android.widget.Switch;
 
 public class NotifyEditor_Activity extends AppCompatActivity {
 
-    Notify notification;
+    Notify notification = new Notify("notify", "notify", "notify", false);
 
     Button btnBt, btnVolume, btnData, btnPlane, btnWifi;
 
@@ -51,11 +51,10 @@ public class NotifyEditor_Activity extends AppCompatActivity {
     }
 
 
-    public Notify createNotify()
+    public void createNotify()
     {
-        Notify createdNotification = new Notify();
 
-        return createdNotification;
+
     }
 
 

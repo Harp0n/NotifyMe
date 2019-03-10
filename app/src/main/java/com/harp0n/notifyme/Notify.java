@@ -36,26 +36,27 @@ public class Notify {
     private boolean alarmSoundChangeOn;
     private boolean alarmSoundIsOn;
 
-    public Notify(double x_coordinate, double y_coordinate, double radius, String name, String description, String notificationMessage, boolean isOneTime, boolean volumeChangeOn, int soundVolume, boolean wifiChangeOn, boolean wifiIsOn, boolean bluethoothChangeOn, boolean bluethoothIsOn, boolean phoneDataChangeOn, boolean phoneDataIsOn, boolean planeModeChangeOn, boolean planeModeIsOn, boolean alarmSoundChangeOn, boolean alarmSoundIsOn) {
-        this.x_coordinate = x_coordinate;
-        this.y_coordinate = y_coordinate;
-        this.radius = radius;
+    public Notify(String name, String description, String notificationMessage, boolean isOneTime) {
+
+        this.x_coordinate = 0;
+        this.y_coordinate = 0;
+        this.radius = 0;
         this.name = name;
         this.description = description;
         this.notificationMessage = notificationMessage;
         this.isOneTime = isOneTime;
-        this.volumeChangeOn = volumeChangeOn;
-        this.soundVolume = soundVolume;
-        this.wifiChangeOn = wifiChangeOn;
-        this.wifiIsOn = wifiIsOn;
-        this.bluethoothChangeOn = bluethoothChangeOn;
-        this.bluethoothIsOn = bluethoothIsOn;
-        this.phoneDataChangeOn = phoneDataChangeOn;
-        this.phoneDataIsOn = phoneDataIsOn;
-        this.planeModeChangeOn = planeModeChangeOn;
-        this.planeModeIsOn = planeModeIsOn;
-        this.alarmSoundChangeOn = alarmSoundChangeOn;
-        this.alarmSoundIsOn = alarmSoundIsOn;
+        this.volumeChangeOn = false;
+        this.soundVolume = 50;
+        this.wifiChangeOn = false;
+        this.wifiIsOn = false;
+        this.bluethoothChangeOn = false;
+        this.bluethoothIsOn = false;
+        this.phoneDataChangeOn = false;
+        this.phoneDataIsOn = false;
+        this.planeModeChangeOn = false;
+        this.planeModeIsOn = false;
+        this.alarmSoundChangeOn = false;
+        this.alarmSoundIsOn = false;
 
         this.ID = this.hashCode();
     }

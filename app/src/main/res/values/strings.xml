@@ -92,4 +92,25 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_">Main_Activity</string>
+    <string name="back">BACK</string>
+    <string name="create">Create</string>
+    <string name="set_name_to_your_notify">Set name to your Notify:</string>
+    <string name="alarm_should_be">Alarm should be:</string>
+    <string name="alarm">aLARM</string>
+    <string name="name">Name</string>
+    <string name="set_description_to_your_notify">Set description to your notify:</string>
+    <string name="name">Name</string>
+    <string name="set_notify_message">Set Notify message:</string>
+    <string name="name">Name</string>
+    <string name="notify_me_one_many_times">Notify me One/Many times</string>
+    <string name="wifi_changes">Wifi Changes:</string>
+    <string name="wifi_should_be">Wifi should be:</string>
+    <string name="bluetooth_changes">Bluetooth Changes</string>
+    <string name="bluetooth_should_be">Bluetooth should be:</string>
+    <string name="phone_data">Phone data:</string>
+    <string name="notify_options_click_if_you_want_to_apply_it">Notify options (Click if you want to apply it):</string>
+    <string name="volume_changes">VOLUME CHANGES</string>
+    <string name="phone_data_should_be">Phone data should be:</string>
+    <string name="plane_mode">Plane mode</string>
+    <string name="plane_mode_should_be">Plane mode should be:</string>
 </resources>
