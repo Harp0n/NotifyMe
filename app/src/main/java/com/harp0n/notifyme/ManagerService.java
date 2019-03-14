@@ -24,6 +24,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -36,6 +38,7 @@ public class ManagerService extends Service {
     private static final int LOCATION_INTERVAL = 7000;
     private static final float LOCATION_DISTANCE = 10f;
     private ArrayList<Notify> notifications;
+    Map<Integer, Boolean> isInsideMap = new HashMap<Integer, Boolean>();
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
@@ -49,9 +52,25 @@ public class ManagerService extends Service {
         public void onLocationChanged(Location location) {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
-            notifications = Serialization.load();
+            //notifications = Serialization.load();
             for (Notify notification : notifications) {
-                if(notification.getLocation().distanceTo(location)<= notification.getRadius()){
+                int ID = notification.getID();
+
+                if (!isInsideMap.containsKey(ID)) {
+                    isInsideMap.put(ID, false);
+                }
+
+                boolean isInRange = notification.getLocation().distanceTo(location) <= notification.getRadius();
+                if (!isInRange && isInsideMap.get(ID) == true) {
+                    isInsideMap.remove(ID);
+                    isInsideMap.put(ID, false);
+                    Log.d("Wychodze: ", notification.getDescription());
+                    continue;
+                }
+
+                if (isInRange && isInsideMap.get(ID) == false) {
+                    isInsideMap.remove(ID);
+                    isInsideMap.put(ID, true);
                     Log.d("Wchodze: ", notification.getDescription());
                     Log.d("Odleglosc od "+notification.getName(), String.valueOf(notification.getLocation().distanceTo(location)));
                     //Wysyłanie powiadomienia
@@ -117,6 +136,7 @@ public class ManagerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
+        notifications = Serialization.load();
         return START_STICKY;
     }
 
