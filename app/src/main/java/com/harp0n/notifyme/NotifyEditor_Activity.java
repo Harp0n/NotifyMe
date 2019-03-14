@@ -134,6 +134,7 @@ public class NotifyEditor_Activity extends AppCompatActivity {
 
 
 
+
     public void createNotify()
     {
         notification.setName(etName.getText().toString());
