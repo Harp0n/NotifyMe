@@ -36,7 +36,7 @@ public class Notify {
     private boolean alarmSoundChangeOn;
     private boolean alarmSoundIsOn;
 
-    public Notify(String name, String description, String notificationMessage, boolean isOneTime) {
+    public Notify(String name, String description, String notificationMessage, boolean isOneTime, int soundVolume) {
 
         this.x_coordinate = 0;
         this.y_coordinate = 0;
@@ -46,7 +46,7 @@ public class Notify {
         this.notificationMessage = notificationMessage;
         this.isOneTime = isOneTime;
         this.volumeChangeOn = false;
-        this.soundVolume = 50;
+        this.soundVolume = soundVolume;
         this.wifiChangeOn = false;
         this.wifiIsOn = false;
         this.bluethoothChangeOn = false;

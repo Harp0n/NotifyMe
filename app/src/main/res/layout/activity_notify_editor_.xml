@@ -161,7 +161,8 @@
                 android:id="@+id/btnBluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/bluetooth_changes" />
+                android:text="@string/bluetooth_changes"
+                />
 
             <Switch
                 android:id="@+id/switchBluetooth"
@@ -200,22 +201,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:text="@string/plane_mode_should_be"
-                android:textSize="18sp"
-                android:visibility="invisible"
-                tools:layout_editor_absoluteX="153dp"
-                tools:layout_editor_absoluteY="386dp" />
-
-            <Button
-                android:id="@+id/btnAlarm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/alarm" />
-
-            <Switch
-                android:id="@+id/swtichAlarmOn"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:text="@string/alarm_should_be"
                 android:textSize="18sp"
                 android:visibility="invisible"
                 tools:layout_editor_absoluteX="153dp"
