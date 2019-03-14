@@ -36,14 +36,29 @@ public class Notify {
         this.setID(this.hashCode());
     }
 
-    public Notify(double latitude, double longitude, double radius, String name, String description)
+    public Notify(double latitude, double longitude, double radius,
+                  String name, String description, String notificationMessage,
+                  boolean volumeChangeOn, int soundVolume,
+                  boolean wifiChangeOn, boolean wifiIsOn,
+                  boolean bluetoothChangeOn, boolean bluetoothIsOn,
+                  boolean alarmSoundOn,
+                  boolean isOneTime)
     {
+        this.setID(this.hashCode());
         this.setX_coordinate(longitude);
         this.setY_coordinate(latitude);
         this.setRadius(radius);
         this.setName(name);
         this.setDescription(description);
-        this.setID(this.hashCode());
+        this.setNotificationMessage(notificationMessage);
+        this.setVolumeChangeOn(volumeChangeOn);
+        this.setWifiChangeOn(wifiChangeOn);
+        this.setBluetoothChangeOn(bluetoothChangeOn);
+        this.setAlarmSoundOn(alarmSoundOn);
+        this.setWifiIsOn(wifiIsOn);
+        this.setBluetoothIsOn(bluetoothIsOn);
+        this.setSoundVolume(soundVolume);
+        this.setOneTime(isOneTime);
     }
 
 

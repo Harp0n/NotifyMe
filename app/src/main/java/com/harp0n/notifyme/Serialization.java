@@ -18,8 +18,25 @@ public class Serialization {
 
     public static ArrayList<Notify> load(){
         ArrayList<Notify> result = new ArrayList<Notify>();
-        result.add(new Notify(37.421983, -122.084065, 50, "Google", "budynek google"));
-        result.add(new Notify(37.422221, -122.086585, 100, "Rzeka", "rzeka obok google"));
+        //result.add(new Notify());
+        result.add(new Notify(
+                37.422221, -122.086585, 100.0,
+                "Rzeka", "rzeka obok google", "zdejmij buty",
+                true, 100,
+                true, true,
+                true, true,
+                true,
+                false
+        ));
+        result.add(new Notify(
+                37.421994, -122.084095, 50.0,
+                "Google", "budynek google", "zadzwon do mamy",
+                false, 0,
+                true, false,
+                true, false,
+                false,
+                false
+        ));
         return result;
     }
 }

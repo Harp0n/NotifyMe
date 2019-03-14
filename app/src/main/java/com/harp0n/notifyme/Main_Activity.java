@@ -2,10 +2,15 @@ package com.harp0n.notifyme;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +61,9 @@ public class Main_Activity extends Activity {
     private void requestPermissions() {
         boolean shouldProvideRationale =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION);
+                        Manifest.permission.ACCESS_FINE_LOCATION) ||
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.VIBRATE);
 
         // Provide an additional rationale to the user. This would happen if the user denied the
         // request previously, but didn't check the "Don't ask again" checkbox.
@@ -68,7 +75,7 @@ public class Main_Activity extends Activity {
                         public void onClick(View view) {
                             // Request permission
                             ActivityCompat.requestPermissions(Main_Activity.this,
-                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.VIBRATE},
                                     REQUEST_PERMISSIONS_REQUEST_CODE);
                         }
                     });
@@ -78,8 +85,9 @@ public class Main_Activity extends Activity {
             // sets the permission in a given state or the user denied the permission
             // previously and checked "Never ask again".
             ActivityCompat.requestPermissions(Main_Activity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.VIBRATE},
                     REQUEST_PERMISSIONS_REQUEST_CODE);
+
             if( Build.VERSION.SDK_INT < 23 ) {
                 return;
             }
@@ -92,9 +100,32 @@ public class Main_Activity extends Activity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        processIntent(intent);
+    }
+
+    private void processIntent(Intent intent){
+        try {
+            boolean isFromNotification = intent.getExtras().getBoolean("isFromNotification");
+            if(isFromNotification){
+                Intent stopIntent = new Intent(this, RingtonePlayingService.class);
+                this.stopService(stopIntent);
+            }
+        }
+        catch(Exception e){
+
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        processIntent(getIntent());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            Log.d("exytas: ", extras.toString());
+        }
 
         btnCreate = findViewById(R.id.btnCreate);
         requestPermissions();
@@ -114,5 +145,9 @@ public class Main_Activity extends Activity {
     public void onStart() {
         super.onStart();
         //requestPermissions();
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            Log.d("exytas: ", extras.toString());
+        }
     }
 }

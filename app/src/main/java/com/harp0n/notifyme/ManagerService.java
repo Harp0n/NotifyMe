@@ -1,5 +1,6 @@
 package com.harp0n.notifyme;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -51,10 +52,28 @@ public class ManagerService extends Service {
             notifications = Serialization.load();
             for (Notify notification : notifications) {
                 if(notification.getLocation().distanceTo(location)<= notification.getRadius()){
-                    //Log.d("Wchodze: ", notification.getDescription());
+                    Log.d("Wchodze: ", notification.getDescription());
                     Log.d("Odleglosc od "+notification.getName(), String.valueOf(notification.getLocation().distanceTo(location)));
-                    sendNotification(notification.getDescription());
-                    playAlarm();
+                    //Wysyłanie powiadomienia
+                    if(!notification.getNotificationMessage().isEmpty())
+                        sendNotification(notification.getName(),notification.getNotificationMessage());
+                    //Przełączenie głośności
+                    if(notification.isVolumeChangeOn())
+                        setVolume(notification.getSoundVolume());
+                    //Przełączenie wifi
+                    if(notification.isWifiChangeOn())
+                        setWifi(notification.isWifiIsOn());
+                    //Przełączenie bluetooth
+                    if(notification.isBluetoothChangeOn())
+                        setBluetooth(notification.isBluetoothIsOn());
+                    //Włączenie alarmu
+                    if(notification.isAlarmSoundOn())
+                        setAlarm();
+                    //Usuwanie jeśli jest jednorazowe
+                    if(notification.isOneTime()){
+                        //TODO usuwanie poprzez Serialization
+                        Serialization.remove();
+                    }
                 }
                 else {
                     Log.d("Odleglosc od "+notification.getName(), String.valueOf(notification.getLocation().distanceTo(location)));
@@ -160,8 +179,7 @@ public class ManagerService extends Service {
         }
     }
 
-    private void sendNotification(String notificationDetails) {
-        Log.d("WCHODZE", notificationDetails);
+    private void sendNotification(String notificationTitle, String notificationText) {
         // Get an instance of the Notification manager
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -173,12 +191,19 @@ public class ManagerService extends Service {
             NotificationChannel mChannel =
                     new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
 
+          //  mChannel.setDescription("This is Channel 1");
+         //   mChannel.setSound(null, null);
+         //   mChannel.setLockscreenVisibility(NotificationCompat.PRIORITY_HIGH);
+        //    mChannel.setVibrationPattern(new long[] {1000,1000,1000});
+            mChannel.enableVibration(true);
             // Set the Notification Channel for the Notification Manager.
             mNotificationManager.createNotificationChannel(mChannel);
         }
 
         // Create an explicit content Intent that starts the main Activity.
         Intent notificationIntent = new Intent(getApplicationContext(), Main_Activity.class);
+
+        notificationIntent.putExtra("isFromNotification", true);
 
         // Construct a task stack.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -196,6 +221,8 @@ public class ManagerService extends Service {
         // Get a notification builder that's compatible with platform versions >= 4
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
+        Notification notification = new Notification();
+
         // Define the notification settings.
         builder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 // In a real app, you may want to use a library like Volley
@@ -203,9 +230,12 @@ public class ManagerService extends Service {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
                         R.drawable.ic_launcher_foreground))
                 .setColor(Color.RED)
-                .setContentTitle(notificationDetails)
-                .setContentText(getString(R.string.geofence_transition_notification_text))
-                .setContentIntent(notificationPendingIntent);
+                .setContentTitle(getString(R.string.transition_entered) + " " + notificationTitle)
+                .setContentText(notificationText)
+                .setContentIntent(notificationPendingIntent)
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+                .addAction(R.drawable.ic_launcher_foreground, "Pause", notificationPendingIntent);
+
 
         // Set the Channel ID for Android O.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -214,7 +244,6 @@ public class ManagerService extends Service {
 
         // Dismiss notification once the user touches it.
         builder.setAutoCancel(true);
-
         // Issue the notification
         mNotificationManager.notify(0, builder.build());
     }
@@ -244,29 +273,32 @@ public class ManagerService extends Service {
             bluetoothAdapter.disable();
         }
     }
-    private void playAlarm(){
-        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if(alert == null){
-            // alert is null, using backup
-            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            // I can't see this ever being null (as always have a default notification)
-            // but just incase
-            if(alert == null) {
-                // alert backup is null, using 2nd backup
-                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-            }
-        }
-        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), alert);
-//        Uri path = Uri.parse("android.resource://"+getPackageName()+"/raw/sound.mp3");
-//        RingtoneManager.setActualDefaultRingtoneUri(
-//                getApplicationContext(), RingtoneManager.TYPE_RINGTONE,
-//                path);
-//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), path);
-        if( Build.VERSION.SDK_INT < 28 ) {
-            r.play();
-            return;
-        }
-        r.setVolume(1.0f);
-        r.play();
+    private void setAlarm(){
+        Intent startIntent = new Intent(getApplicationContext(), RingtonePlayingService.class);
+        getApplicationContext().startService(startIntent);
+        Log.d("RINGTONE", "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOl");
+//        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+//        if(alert == null){
+//            // alert is null, using backup
+//            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//            // I can't see this ever being null (as always have a default notification)
+//            // but just incase
+//            if(alert == null) {
+//                // alert backup is null, using 2nd backup
+//                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+//            }
+//        }
+//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), alert);
+////        Uri path = Uri.parse("android.resource://"+getPackageName()+"/raw/sound.mp3");
+////        RingtoneManager.setActualDefaultRingtoneUri(
+////                getApplicationContext(), RingtoneManager.TYPE_RINGTONE,
+////                path);
+////        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), path);
+//        if( Build.VERSION.SDK_INT < 28 ) {
+//            r.play();
+//            return;
+//        }
+//        r.setVolume(1.0f);
+//        r.play();
     }
 }
