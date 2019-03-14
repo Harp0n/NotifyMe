@@ -1,5 +1,6 @@
 package com.harp0n.notifyme;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -21,6 +22,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import androidx.core.app.TaskStackBuilder;
 public class ManagerService extends Service {
     private static final String TAG = "ManagerService";
     private static final String CHANNEL_ID = "channel_01";
+    private static final String CHANNEL_MAIN_ID = "channel_02";
     private LocationManager mLocationManager = null;
     private static final int LOCATION_INTERVAL = 7000;
     private static final float LOCATION_DISTANCE = 10f;
@@ -145,6 +148,62 @@ public class ManagerService extends Service {
 
         Log.e(TAG, "onCreate");
 
+        // Get an instance of the Notification manager
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Android O requires a Notification Channel.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            // Create the channel for the notification
+            NotificationChannel mChannel =
+                    new NotificationChannel(CHANNEL_MAIN_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+            mChannel.enableVibration(false);
+            mChannel.setSound(null, null);
+            // Set the Notification Channel for the Notification Manager.
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
+
+        // Create an explicit content Intent that starts the main Activity.
+        Intent notificationIntent = new Intent(getApplicationContext(), Main_Activity.class);
+
+        notificationIntent.putExtra("isFromNotification", true);
+
+        // Construct a task stack.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        // Add the main Activity to the task stack as the parent.
+        stackBuilder.addParentStack(Main_Activity.class);
+
+        // Push the content Intent onto the stack.
+        stackBuilder.addNextIntent(notificationIntent);
+
+        // Get a PendingIntent containing the entire back stack.
+        PendingIntent notificationPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Get a notification builder that's compatible with platform versions >= 4
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        Notification notification = new Notification();
+        // Define the notification settings.
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground)
+                // In a real app, you may want to use a library like Volley
+                // to decode the Bitmap.
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                        R.drawable.ic_launcher_foreground))
+                .setColor(Color.BLUE)
+                .setContentTitle("NotifyMe")
+                .setContentIntent(notificationPendingIntent)
+                .setContentText("Kliknij aby wrócić do aplikacji");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder.setChannelId(CHANNEL_MAIN_ID); // Channel ID
+        }
+
+
+        startForeground(3, builder.build());
+
         initializeLocationManager();
 
         try {
@@ -178,6 +237,7 @@ public class ManagerService extends Service {
     public void onDestroy() {
         Log.e(TAG, "onDestroy");
         super.onDestroy();
+
         if (mLocationManager != null) {
             for (int i = 0; i < mLocationListeners.length; i++) {
                 try {
@@ -280,9 +340,9 @@ public class ManagerService extends Service {
         audioManager.setStreamVolume(AudioManager.STREAM_RING,
                 (int)(volume/100.0*maxRingVolume), AudioManager.FLAG_SHOW_UI);
 
-        int maxNotificationVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
-                (int)(volume/100.0*maxNotificationVolume), AudioManager.FLAG_SHOW_UI);
+//        int maxNotificationVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
+//        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
+//                (int)(volume/100.0*maxNotificationVolume), AudioManager.FLAG_SHOW_UI);
     }
     private void setBluetooth(boolean enable) {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

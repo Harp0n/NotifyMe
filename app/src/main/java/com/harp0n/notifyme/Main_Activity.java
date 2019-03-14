@@ -24,7 +24,7 @@ import androidx.core.app.ActivityCompat;
 ////////////////////////////// To dla ciebie Seba, ale potrzebowałem głównej aktywności żeby sprawdzić moją /////////////////
 public class Main_Activity extends Activity {
 
-    private Button btnCreate;
+    private Button btnCreate, btnRemove;
     private static final String TAG = Main_Activity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private static final int ON_DO_NOT_DISTURB_CALLBACK_CODE = 35;
@@ -123,10 +123,11 @@ public class Main_Activity extends Activity {
         setContentView(R.layout.activity);
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            Log.d("exytas: ", extras.toString());
+            Log.d("extras: ", extras.toString());
         }
 
         btnCreate = findViewById(R.id.btnCreate);
+        btnRemove = findViewById(R.id.btnRemove);
         requestPermissions();
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +136,20 @@ public class Main_Activity extends Activity {
               //  Main_Activity.this.startActivity(myIntent);
                 Log.d("KLIK","PRZYCISK");
                 Intent myIntent = new Intent(Main_Activity.this, ManagerService.class);
-                startService(myIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    // startForegroundService(myIntent);
+                    startService(myIntent);
+                } else {
+                    startService(myIntent);
+                }
+            }
+        });
+
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("KLIK", "WYLACZAM");
+                stopService(new Intent(Main_Activity.this, ManagerService.class));
             }
         });
 

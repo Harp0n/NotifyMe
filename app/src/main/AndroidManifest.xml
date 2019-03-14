@@ -22,7 +22,11 @@
             android:name=".ManagerService">
         </service>
         <service android:name=".RingtonePlayingService"></service>
-        <activity android:name=".Main_Activity">
+
+        <activity
+            android:name=".Main_Activity"
+            android:launchMode="singleTop"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
