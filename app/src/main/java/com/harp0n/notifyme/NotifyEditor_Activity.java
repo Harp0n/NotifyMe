@@ -112,6 +112,7 @@ public class NotifyEditor_Activity extends AppCompatActivity {
         });
 
 
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
