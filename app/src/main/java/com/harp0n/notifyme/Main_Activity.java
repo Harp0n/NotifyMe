@@ -113,7 +113,6 @@ public class Main_Activity extends Activity {
             }
         }
         catch(Exception e){
-
         }
     }
 
@@ -141,6 +140,7 @@ public class Main_Activity extends Activity {
         });
 
     }
+
     @Override
     public void onStart() {
         super.onStart();

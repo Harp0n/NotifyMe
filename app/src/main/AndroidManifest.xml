@@ -21,6 +21,7 @@
         <service
             android:name=".ManagerService">
         </service>
+        <service android:name=".RingtonePlayingService"></service>
         <activity android:name=".Main_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

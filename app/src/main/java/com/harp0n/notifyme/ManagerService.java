@@ -233,9 +233,10 @@ public class ManagerService extends Service {
                 .setContentTitle(getString(R.string.transition_entered) + " " + notificationTitle)
                 .setContentText(notificationText)
                 .setContentIntent(notificationPendingIntent)
-                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
-                .addAction(R.drawable.ic_launcher_foreground, "Pause", notificationPendingIntent);
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
 
+
+        //builder.addAction(R.drawable.ic_launcher_foreground, "Pause", notificationPendingIntent);
 
         // Set the Channel ID for Android O.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -274,31 +275,7 @@ public class ManagerService extends Service {
         }
     }
     private void setAlarm(){
-        Intent startIntent = new Intent(getApplicationContext(), RingtonePlayingService.class);
-        getApplicationContext().startService(startIntent);
-        Log.d("RINGTONE", "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOl");
-//        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-//        if(alert == null){
-//            // alert is null, using backup
-//            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//            // I can't see this ever being null (as always have a default notification)
-//            // but just incase
-//            if(alert == null) {
-//                // alert backup is null, using 2nd backup
-//                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-//            }
-//        }
-//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), alert);
-////        Uri path = Uri.parse("android.resource://"+getPackageName()+"/raw/sound.mp3");
-////        RingtoneManager.setActualDefaultRingtoneUri(
-////                getApplicationContext(), RingtoneManager.TYPE_RINGTONE,
-////                path);
-////        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), path);
-//        if( Build.VERSION.SDK_INT < 28 ) {
-//            r.play();
-//            return;
-//        }
-//        r.setVolume(1.0f);
-//        r.play();
+        Intent startIntent = new Intent(this, RingtonePlayingService.class);
+        startService(startIntent);
     }
 }

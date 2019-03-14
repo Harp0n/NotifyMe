@@ -36,10 +36,8 @@ public class RingtonePlayingService extends Service
 
         this.ringtone = RingtoneManager.getRingtone(this, alert);
         ringtone.play();
-        Log.d("RINGTONE", "DZIALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         return START_NOT_STICKY;
     }
-
     @Override
     public void onDestroy()
     {
