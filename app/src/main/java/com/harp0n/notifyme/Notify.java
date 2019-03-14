@@ -1,5 +1,7 @@
 package com.harp0n.notifyme;
 
+import android.location.Location;
+
 @SuppressWarnings("unused")
 
 public class Notify {
@@ -13,18 +15,18 @@ public class Notify {
     private double radius;
 
     private String name;
-    private String discription;
+    private String description;
     private String notificationMessage;
 
     private boolean isOneTime;
 
     private boolean volumeChangeOn;
     private boolean wifiChangeOn;
-    private boolean bluethoothChangeOn;
+    private boolean bluetoothChangeOn;
     private boolean alarmSoundOn;
 
     private boolean wifiIsOn;
-    private boolean bluethoothIsOn;
+    private boolean bluetoothIsOn;
 
     private int soundVolume;
 
@@ -34,7 +36,15 @@ public class Notify {
         this.setID(this.hashCode());
     }
 
-
+    public Notify(double latitude, double longitude, double radius, String name, String description)
+    {
+        this.setX_coordinate(longitude);
+        this.setY_coordinate(latitude);
+        this.setRadius(radius);
+        this.setName(name);
+        this.setDescription(description);
+        this.setID(this.hashCode());
+    }
 
 
 
@@ -50,12 +60,12 @@ public class Notify {
         this.name = name;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getNotificationMessage() {
@@ -90,12 +100,12 @@ public class Notify {
         this.wifiChangeOn = wifiChangeOn;
     }
 
-    public boolean isBluethoothChangeOn() {
-        return bluethoothChangeOn;
+    public boolean isBluetoothChangeOn() {
+        return bluetoothChangeOn;
     }
 
-    public void setBluethoothChangeOn(boolean bluethoothChangeOn) {
-        this.bluethoothChangeOn = bluethoothChangeOn;
+    public void setBluetoothChangeOn(boolean bluetoothChangeOn) {
+        this.bluetoothChangeOn = bluetoothChangeOn;
     }
 
     public boolean isAlarmSoundOn() {
@@ -114,12 +124,12 @@ public class Notify {
         this.wifiIsOn = wifiIsOn;
     }
 
-    public boolean isBluethoothIsOn() {
-        return bluethoothIsOn;
+    public boolean isBluetoothIsOn() {
+        return bluetoothIsOn;
     }
 
-    public void setBluethoothIsOn(boolean bluethoothIsOn) {
-        this.bluethoothIsOn = bluethoothIsOn;
+    public void setBluetoothIsOn(boolean bluetoothIsOn) {
+        this.bluetoothIsOn = bluetoothIsOn;
     }
 
     public int getSoundVolume() {
@@ -150,6 +160,11 @@ public class Notify {
         return y_coordinate;
     }
 
+    public Location getLocation() { Location location = new  Location("");
+                                    location.setLatitude(getY_coordinate());
+                                    location.setLongitude(getX_coordinate());
+                                    return location; }
+
     public void setY_coordinate(double y_coordinate) {
         this.y_coordinate = y_coordinate;
     }
@@ -168,15 +183,15 @@ public class Notify {
         return "Notify{" +
                 "ID=" + ID +
                 ", name='" + name + '\'' +
-                ", discription='" + discription + '\'' +
+                ", description='" + description + '\'' +
                 ", notificationMessage='" + notificationMessage + '\'' +
                 ", isOneTime=" + isOneTime +
                 ", volumeChangeOn=" + volumeChangeOn +
                 ", wifiChangeOn=" + wifiChangeOn +
-                ", bluethoothChangeOn=" + bluethoothChangeOn +
+                ", bluetoothChangeOn=" + bluetoothChangeOn +
                 ", alarmSoundOn=" + alarmSoundOn +
                 ", wifiIsOn=" + wifiIsOn +
-                ", bluethoothIsOn=" + bluethoothIsOn +
+                ", bluetoothIsOn=" + bluetoothIsOn +
                 ", soundVolume=" + soundVolume +
                 '}';
     }

@@ -1,9 +1,9 @@
 package com.harp0n.notifyme;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class NotifyEditor_Activity extends AppCompatActivity {
+public class NotifyEditor_Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
