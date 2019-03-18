@@ -29,12 +29,12 @@ public class Main_Activity extends Activity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private static final int ON_DO_NOT_DISTURB_CALLBACK_CODE = 35;
 
-    private void showSnackbar(final String text) {
-        View container = findViewById(android.R.id.content);
-        if (container != null) {
-            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
-        }
-    }
+//    private void showSnackbar(final String text) {
+//        View container = findViewById(android.R.id.content);
+//        if (container != null) {
+//            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
+//        }
+//    }
 
     /**
      * Shows a {@link Snackbar}.
@@ -52,11 +52,11 @@ public class Main_Activity extends Activity {
                 .setAction(getString(actionStringId), listener).show();
     }
 
-    private boolean checkPermissions() {
-        int permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
+//    private boolean checkPermissions() {
+//        int permissionState = ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION);
+//        return permissionState == PackageManager.PERMISSION_GRANTED;
+//    }
 
     private void requestPermissions() {
         boolean shouldProvideRationale =
@@ -121,10 +121,6 @@ public class Main_Activity extends Activity {
         processIntent(getIntent());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            Log.d("extras: ", extras.toString());
-        }
 
         btnCreate = findViewById(R.id.btnCreate);
         btnRemove = findViewById(R.id.btnRemove);
@@ -155,13 +151,13 @@ public class Main_Activity extends Activity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //requestPermissions();
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            Log.d("exytas: ", extras.toString());
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        //requestPermissions();
+//        Bundle extras = getIntent().getExtras();
+//        if(extras != null){
+//            Log.d("exytas: ", extras.toString());
+//        }
+//    }
 }

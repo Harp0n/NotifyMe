@@ -37,6 +37,8 @@ public class ManagerService extends Service {
     private static final String TAG = "ManagerService";
     private static final String CHANNEL_ID = "channel_01";
     private static final String CHANNEL_MAIN_ID = "channel_02";
+    private static final int FOREGROUND_ID = 42;
+    private static final int NOTIFICATION_ID = 43;
     private LocationManager mLocationManager = null;
     private static final int LOCATION_INTERVAL = 7000;
     private static final float LOCATION_DISTANCE = 10f;
@@ -125,7 +127,6 @@ public class ManagerService extends Service {
 //            new LocationListener(LocationManager.NETWORK_PROVIDER)
 //    };
 
-
     LocationListener[] mLocationListeners = new LocationListener[]{
             new LocationListener(LocationManager.PASSIVE_PROVIDER)
     };
@@ -201,9 +202,8 @@ public class ManagerService extends Service {
             builder.setChannelId(CHANNEL_MAIN_ID); // Channel ID
         }
 
-
-        startForeground(3, builder.build());
-
+        //keep notification in foreground
+        startForeground(FOREGROUND_ID, builder.build());
         initializeLocationManager();
 
         try {
@@ -270,11 +270,6 @@ public class ManagerService extends Service {
             // Create the channel for the notification
             NotificationChannel mChannel =
                     new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
-
-          //  mChannel.setDescription("This is Channel 1");
-         //   mChannel.setSound(null, null);
-         //   mChannel.setLockscreenVisibility(NotificationCompat.PRIORITY_HIGH);
-        //    mChannel.setVibrationPattern(new long[] {1000,1000,1000});
             mChannel.enableVibration(true);
             // Set the Notification Channel for the Notification Manager.
             mNotificationManager.createNotificationChannel(mChannel);
@@ -315,9 +310,6 @@ public class ManagerService extends Service {
                 .setContentIntent(notificationPendingIntent)
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
 
-
-        //builder.addAction(R.drawable.ic_launcher_foreground, "Pause", notificationPendingIntent);
-
         // Set the Channel ID for Android O.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(CHANNEL_ID); // Channel ID
@@ -326,7 +318,7 @@ public class ManagerService extends Service {
         // Dismiss notification once the user touches it.
         builder.setAutoCancel(true);
         // Issue the notification
-        mNotificationManager.notify(0, builder.build());
+        mNotificationManager.notify(NOTIFICATION_ID, builder.build());
     }
     private void setWifi(boolean isOn){
         WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
