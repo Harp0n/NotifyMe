@@ -1,6 +1,6 @@
 package com.harp0n.notifyme;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
-public class NotifyEditor_Activity extends AppCompatActivity {
+public class NotifyEditor_Activity extends Activity {
 
     Notify notification = new Notify("notify", "notify", "notify", false, 100);
 
