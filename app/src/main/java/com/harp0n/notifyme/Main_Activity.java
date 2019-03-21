@@ -70,6 +70,7 @@ public class Main_Activity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Main_Activity.this, GoogleMaps.class);
+                myIntent.putExtra("test",200);
                 Main_Activity.this.startActivity(myIntent);
             }
         });

@@ -1,6 +1,7 @@
 package com.harp0n.notifyme;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -10,7 +11,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,6 +25,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
 
 import java.util.Locale;
 
@@ -35,11 +42,15 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
     private Circle circle;
     private SeekBar radiusBarr;
     private LatLng home;
-
+    private TextView meditText;
+    private Button buttonNext;
+    private Intent intent;
+    private Location currentLocation;
     private class radiusListener implements SeekBar.OnSeekBarChangeListener {
 
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             circle.setRadius(progress);
+            meditText.setText(progress+"m");
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -54,9 +65,6 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
     public void onMyLocationClick(@NonNull Location location) {
     }
 
-    public void next(View view){
-
-    }
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -127,7 +135,22 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_google_maps);
+        buttonNext = (Button)findViewById(R.id.buttonNext);
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Intent next = new Intent(GoogleMaps.this,NotifyEditor_Activity.class);
+                  next.putExtra("Lat",marker.getPosition().latitude);
+                    next.putExtra("Lng",marker.getPosition().longitude);
+                 startActivity(next);
+            }
+        });
+         intent = getIntent();
+        meditText =  findViewById(R.id.textView);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -145,19 +168,22 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        home = new LatLng(51.110393, 17.035653);
         radiusBarr = findViewById(R.id.radiusBar);
+        int test = 100;
         radiusBarr.setOnSeekBarChangeListener(new radiusListener());
+         test = (intent.getIntExtra("test",10));
+        Log.d("testujemy XD",String.valueOf(test));
         float zoom = 15;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setOnMyLocationClickListener(this);
-
-
         }
-        else mMap.setMyLocationEnabled(true);
+        else mMap.setMyLocationEnabled(false);
+        currentLocation = ManagerService.getInstance().getLastLocation();
+        if(currentLocation==null)home = new LatLng(51.110393, 17.035653);
+        else home = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoom));
         circle = mMap.addCircle(new CircleOptions()
                 .center(home)
@@ -170,6 +196,7 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
         marker.setDraggable(true);
         setMapLongClick(mMap);
         setMarkerDrag(mMap);
+
 
     }
     @Override

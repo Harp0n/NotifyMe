@@ -2,7 +2,7 @@
 <LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:weightSum="1.2"
+    android:weightSum="1.25"
     android:orientation="vertical"
     android:baselineAligned="false">
 
@@ -16,18 +16,28 @@
         android:layout_weight="0.8"
         tools:context=".GoogleMaps" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        android:text="10m"
+        android:textAlignment="center" />
+
     <SeekBar
         android:id="@+id/radiusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:max="1000" />
+        android:min="10"
+        android:max="250" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonNext"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:text="SSIJ MI PALE" />
+        android:text="Kontynuuj" />
 
 </LinearLayout>
