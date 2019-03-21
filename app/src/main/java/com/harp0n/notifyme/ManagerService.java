@@ -34,6 +34,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
 public class ManagerService extends Service {
+    private static ManagerService sInstance;
     private static final String TAG = "ManagerService";
     private static final String CHANNEL_ID = "channel_01";
     private static final String CHANNEL_MAIN_ID = "channel_02";
@@ -43,6 +44,7 @@ public class ManagerService extends Service {
     private static final int LOCATION_INTERVAL = 7000;
     private static final float LOCATION_DISTANCE = 10f;
     private ArrayList<Notify> notifications;
+    private Location lastLocation;
     Map<Integer, Boolean> isInsideMap = new HashMap<Integer, Boolean>();
 
     private class LocationListener implements android.location.LocationListener {
@@ -57,6 +59,10 @@ public class ManagerService extends Service {
         public void onLocationChanged(Location location) {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
+            if (lastLocation == null)
+                lastLocation = new Location(location);
+            else
+                lastLocation.set(location);
             //notifications = Serialization.load();
             for (Notify notification : notifications) {
                 int ID = notification.getID();
@@ -131,6 +137,15 @@ public class ManagerService extends Service {
             new LocationListener(LocationManager.PASSIVE_PROVIDER)
     };
 
+    public static ManagerService getInstance() {
+        return sInstance;
+    }
+
+    //return last location, or null if there was no previous detected location
+    public Location getLastLocation() {
+        return lastLocation;
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -148,7 +163,8 @@ public class ManagerService extends Service {
     public void onCreate() {
 
         Log.e(TAG, "onCreate");
-
+        //save instance
+        sInstance = this;
         // Get an instance of the Notification manager
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

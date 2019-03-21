@@ -144,6 +144,11 @@ public class Main_Activity extends Activity {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TO DLA CIEBIE PAWEL, PRZYKLAD JAK DOSTAC LOKALIZACJE
+//                if(ManagerService.getInstance().getLastLocation() != null)
+//                    Log.d("LOKALIZACJA ZMIENIONA: ", ManagerService.getInstance().getLastLocation().toString());
+//                else
+//                    Log.d("NULL","NIE WYKRYTO LOKALIZACJI");
                 Log.d("KLIK", "WYLACZAM");
                 stopService(new Intent(Main_Activity.this, ManagerService.class));
             }
