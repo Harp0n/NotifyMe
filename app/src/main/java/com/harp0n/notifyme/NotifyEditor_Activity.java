@@ -53,8 +53,8 @@ public class NotifyEditor_Activity extends Activity {
                 clickButtonToShowSwitch(sBt);
                 if(sBt.getVisibility() == View.VISIBLE )
                 {
-                    notification.setBluethoothChangeOn(true);
-                } else notification.setBluethoothChangeOn(false);
+                    notification.setBluetoothChangeOn(true);
+                } else notification.setBluetoothChangeOn(false);
 
             }
         });
@@ -147,7 +147,7 @@ public class NotifyEditor_Activity extends Activity {
         }
         if(sBt.getVisibility() == View.VISIBLE)
         {
-            notification.setBluethoothIsOn(sBt.isChecked());
+            notification.setBluetoothIsOn(sBt.isChecked());
         }
         if(sWifi.getVisibility() == View.VISIBLE)
         {
@@ -155,7 +155,7 @@ public class NotifyEditor_Activity extends Activity {
         }
         if(sBt.getVisibility() == View.VISIBLE)
         {
-            notification.setBluethoothIsOn(sBt.isChecked());
+            notification.setBluetoothIsOn(sBt.isChecked());
         }
         if(sData.getVisibility() == View.VISIBLE)
         {

@@ -1,5 +1,7 @@
 package com.harp0n.notifyme;
 
+import android.location.Location;
+
 @SuppressWarnings("unused")
 
 public class Notify {
@@ -24,8 +26,8 @@ public class Notify {
     private boolean wifiChangeOn;
     private boolean wifiIsOn;
 
-    private boolean bluethoothChangeOn;
-    private boolean bluethoothIsOn;
+    private boolean bluetoothChangeOn;
+    private boolean bluetoothIsOn;
 
     private boolean phoneDataChangeOn;
     private boolean phoneDataIsOn;
@@ -49,8 +51,8 @@ public class Notify {
         this.soundVolume = soundVolume;
         this.wifiChangeOn = false;
         this.wifiIsOn = false;
-        this.bluethoothChangeOn = false;
-        this.bluethoothIsOn = false;
+        this.bluetoothChangeOn = false;
+        this.bluetoothIsOn = false;
         this.phoneDataChangeOn = false;
         this.phoneDataIsOn = false;
         this.planeModeChangeOn = false;
@@ -121,6 +123,10 @@ public class Notify {
     public void setNotificationMessage(String notificationMessage) {
         this.notificationMessage = notificationMessage;
     }
+    public Location getLocation() { Location location = new  Location("");
+        location.setLatitude(getY_coordinate());
+        location.setLongitude(getX_coordinate());
+        return location; }
 
     public boolean isOneTime() {
         return isOneTime;
@@ -162,20 +168,20 @@ public class Notify {
         this.wifiIsOn = wifiIsOn;
     }
 
-    public boolean isBluethoothChangeOn() {
-        return bluethoothChangeOn;
+    public boolean isBluetoothChangeOn() {
+        return bluetoothChangeOn;
     }
 
-    public void setBluethoothChangeOn(boolean bluethoothChangeOn) {
-        this.bluethoothChangeOn = bluethoothChangeOn;
+    public void setBluetoothChangeOn(boolean bluethoothChangeOn) {
+        this.bluetoothChangeOn = bluethoothChangeOn;
     }
 
-    public boolean isBluethoothIsOn() {
-        return bluethoothIsOn;
+    public boolean isBluetoothIsOn() {
+        return bluetoothIsOn;
     }
 
-    public void setBluethoothIsOn(boolean bluethoothIsOn) {
-        this.bluethoothIsOn = bluethoothIsOn;
+    public void setBluetoothIsOn(boolean bluethoothIsOn) {
+        this.bluetoothIsOn = bluethoothIsOn;
     }
 
     public boolean isPhoneDataChangeOn() {
@@ -241,8 +247,8 @@ public class Notify {
                 ", soundVolume=" + soundVolume +
                 ", wifiChangeOn=" + wifiChangeOn +
                 ", wifiIsOn=" + wifiIsOn +
-                ", bluethoothChangeOn=" + bluethoothChangeOn +
-                ", bluethoothIsOn=" + bluethoothIsOn +
+                ", bluetoothChangeOn=" + bluetoothChangeOn +
+                ", bluetoothIsOn=" + bluetoothIsOn +
                 ", phoneDataChangeOn=" + phoneDataChangeOn +
                 ", phoneDataIsOn=" + phoneDataIsOn +
                 ", planeModeChangeOn=" + planeModeChangeOn +

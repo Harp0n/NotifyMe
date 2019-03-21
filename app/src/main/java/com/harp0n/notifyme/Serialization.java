@@ -83,7 +83,7 @@ public class Serialization extends Main_Activity{
             dataJObject.put("volumeChangeOn=",notifyObj.isVolumeChangeOn());
             dataJObject.put("wifiChangeOn=",notifyObj.isWifiChangeOn());
             dataJObject.put("bluetoothChangeOn=",notifyObj.isBluetoothChangeOn());
-            dataJObject.put("alarmSoundOn=",notifyObj.isAlarmSoundOn());
+            dataJObject.put("alarmSoundOn=",notifyObj.isAlarmSoundIsOn());
             dataJObject.put("wifiIsOn=",notifyObj.isWifiChangeOn());
             dataJObject.put("bluetoothIsOn=",notifyObj.isBluetoothIsOn());
             dataJObject.put("soundVolume=",notifyObj.getSoundVolume());
@@ -165,7 +165,7 @@ public class Serialization extends Main_Activity{
                     notifyObj.setVolumeChangeOn(loadJArray.getJSONObject(i).getBoolean("volumeChangeOn="));
                     notifyObj.setWifiChangeOn(loadJArray.getJSONObject(i).getBoolean("wifiChangeOn="));
                     notifyObj.setBluetoothChangeOn(loadJArray.getJSONObject(i).getBoolean("bluetoothChangeOn="));
-                    notifyObj.setAlarmSoundOn(loadJArray.getJSONObject(i).getBoolean("alarmSoundOn="));
+                    notifyObj.setAlarmSoundChangeOn(loadJArray.getJSONObject(i).getBoolean("alarmSoundOn="));
                     notifyObj.setWifiIsOn(loadJArray.getJSONObject(i).getBoolean("wifiIsOn="));
                     notifyObj.setBluetoothIsOn(loadJArray.getJSONObject(i).getBoolean("bluetoothIsOn="));
                     notifyObj.setSoundVolume(loadJArray.getJSONObject(i).getInt("soundVolume="));

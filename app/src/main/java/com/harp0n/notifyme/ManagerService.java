@@ -97,12 +97,12 @@ public class ManagerService extends Service {
                     if(notification.isBluetoothChangeOn())
                         setBluetooth(notification.isBluetoothIsOn());
                     //Włączenie alarmu
-                    if(notification.isAlarmSoundOn())
+                    if(notification.isAlarmSoundIsOn())
                         setAlarm();
                     //Usuwanie jeśli jest jednorazowe
                     if(notification.isOneTime()){
                         //TODO usuwanie poprzez Serialization
-                        Serialization.remove();
+                        Serialization.remove(notification, getApplicationContext());
                     }
                 }
                 else {
@@ -155,7 +155,7 @@ public class ManagerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
-        notifications = Serialization.load();
+        notifications = Serialization.load(this);
         return START_STICKY;
     }
 

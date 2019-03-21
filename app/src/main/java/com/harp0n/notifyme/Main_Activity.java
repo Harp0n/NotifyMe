@@ -13,29 +13,29 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import androidx.core.app.ActivityCompat;
 
-////////////////////////////// To dla ciebie Seba, ale potrzebowałem głównej aktywności żeby sprawdzić moją /////////////////
+
 public class Main_Activity extends Activity {
 
-    private Button btnCreate, btnRemove;
     private static final String TAG = Main_Activity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private static final int ON_DO_NOT_DISTURB_CALLBACK_CODE = 35;
     //TODO exchange for load()
-    private Notify[] tests = new Notify[20];
+    private ArrayList<Notify> notifyArrayList;
     private FloatingActionButton fbEditor;
     private ExpandableListView expList;
     private int lastPosition=-1;
-    private Button btnCreate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         processIntent(getIntent());
@@ -44,48 +44,27 @@ public class Main_Activity extends Activity {
         requestPermissions();
         Intent myIntent = new Intent(Main_Activity.this, ManagerService.class);
         startService(myIntent);
-        btnCreate = findViewById(R.id.btnCreate);
-
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Main_Activity.this, NotifyEditor_Activity.class);
-                Main_Activity.this.startActivity(myIntent);
+        notifyArrayList = Serialization.load(this);
+        if(notifyArrayList!=null){
+            Notify[] ns = new Notify[notifyArrayList.size()];
+            for(int i=0; i<ns.length; i++){
+                ns[i] = notifyArrayList.get(i);
             }
-        });
+            expList = findViewById(R.id.expList);
+            ExpandableList el = new ExpandableList(this, ns);
+            expList.setAdapter(el);
+            expList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
-        for(int i=0; i<tests.length; i++){
-            Notify n = new Notify();
-            n.setAlarmSoundOn(true);
-            n.setBluethoothChangeOn(false);
-            n.setDiscription("TEST TEST TEST" + i);
-            n.setName("NOTIFY" + i);
-            n.setNotificationMessage("MESSAGE");
-            n.setOneTime(false);
-            n.setRadius(29.3424);
-            n.setVolumeChangeOn(true);
-            n.setSoundVolume(69);
-            n.setWifiChangeOn(false);
-            n.setX_coordinate(69.696969);
-            n.setY_coordinate(96.969696);
-            tests[i] = n;
-        }
-
-        expList = findViewById(R.id.expList);
-        ExpandableList el = new ExpandableList(this, tests);
-        expList.setAdapter(el);
-        expList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (lastPosition != -1
-                        && groupPosition != lastPosition) {
-                    expList.collapseGroup(lastPosition);
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    if (lastPosition != -1
+                            && groupPosition != lastPosition) {
+                        expList.collapseGroup(lastPosition);
+                    }
+                    lastPosition = groupPosition;
                 }
-                lastPosition = groupPosition;
-            }
-        });
-
+            });
+        }
         fbEditor = findViewById(R.id.fbEditor);
         fbEditor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,16 +75,7 @@ public class Main_Activity extends Activity {
         });
 
     }
-    private static final String TAG = Main_Activity.class.getSimpleName();
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-    private static final int ON_DO_NOT_DISTURB_CALLBACK_CODE = 35;
 
-//    private void showSnackbar(final String text) {
-//        View container = findViewById(android.R.id.content);
-//        if (container != null) {
-//            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
-//        }
-//    }
 
     /**
      * Shows a {@link Snackbar}.

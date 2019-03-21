@@ -91,7 +91,7 @@ public class ExpandableList extends BaseExpandableListAdapter {
                 bluetoothChangeView, alarmSoundOnView};
 
         nameView.setText(n.getName());
-        descriptionView.setText(n.getDiscription());
+        descriptionView.setText(n.getDescription());
         messageView.setText(n.getNotificationMessage());
         deleteButton.setText("USUN");
         editButton.setText("EDIT");
@@ -130,13 +130,13 @@ public class ExpandableList extends BaseExpandableListAdapter {
             wifiChangeView.setText("Włącz wifi: nie");
         }
 
-        if(n.isBluethoothChangeOn()){
+        if(n.isBluetoothChangeOn()){
             bluetoothChangeView.setText("Włącz bluetooth: tak");
         }else{
             bluetoothChangeView.setText("Włącz bluetooth: tak");
         }
 
-        if(n.isAlarmSoundOn()){
+        if(n.isAlarmSoundIsOn()){
             alarmSoundOnView.setText("Powiadomienie dźwiękowe: tak");
         }else{
             alarmSoundOnView.setText("Powiadomienie dźwiękowe: nie");
