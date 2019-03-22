@@ -3,7 +3,6 @@ package com.harp0n.notifyme;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -70,9 +69,7 @@ public class Serialization extends Main_Activity{
 
 
     public static void save(Notify notifyObj, Context context) {
-
         JSONObject dataJObject = new JSONObject();
-
         //przypisanie do obiektu json danych wprowadzonych przez usera w celu zapisania ich
         try{
             dataJObject.put("ID",notifyObj.getID());
@@ -102,9 +99,13 @@ public class Serialization extends Main_Activity{
 
         try{
             // dodanie obiektu do JSONarray
-            JSONArray dataJArray = new JSONArray(jsonString);
+            JSONArray dataJArray;
+            //jesli nie ma zadnych problemow
+            if (jsonString != null && jsonString.length() != 0 && !jsonString.equals("{}"))
+                dataJArray = new JSONArray(jsonString);
+            else
+                dataJArray = new JSONArray();
             dataJArray.put(dataJObject);
-
             // zapisywanie do pliku
             Writer output;
             File file = new File(context.getFilesDir().getAbsolutePath() + "/storage.json");
@@ -157,18 +158,19 @@ public class Serialization extends Main_Activity{
             // tworzenie obiektów Notify i wpisanie ich do notifyArrayList
             for (int i = 0; i < loadJArray.length(); i++) {
                 try {
+                    String name = loadJArray.getJSONObject(i).getString("name=");
+                    String description = loadJArray.getJSONObject(i).getString("description=");
+                    String notificationMessage = loadJArray.getJSONObject(i).getString("notificationMessage=");
+                    boolean isOneTime = loadJArray.getJSONObject(i).getBoolean("isOneTime=");
+                    int soundVolume = loadJArray.getJSONObject(i).getInt("soundVolume=");
+                    notifyObj = new Notify(name, description, notificationMessage, isOneTime, soundVolume);
                     notifyObj.setID(loadJArray.getJSONObject(i).getInt("ID"));
-                    notifyObj.setName(loadJArray.getJSONObject(i).getString("name="));
-                    notifyObj.setDescription(loadJArray.getJSONObject(i).getString("description="));
-                    notifyObj.setNotificationMessage(loadJArray.getJSONObject(i).getString("notificationMessage="));
-                    notifyObj.setOneTime(loadJArray.getJSONObject(i).getBoolean("isOneTime="));
                     notifyObj.setVolumeChangeOn(loadJArray.getJSONObject(i).getBoolean("volumeChangeOn="));
                     notifyObj.setWifiChangeOn(loadJArray.getJSONObject(i).getBoolean("wifiChangeOn="));
                     notifyObj.setBluetoothChangeOn(loadJArray.getJSONObject(i).getBoolean("bluetoothChangeOn="));
                     notifyObj.setAlarmSoundChangeOn(loadJArray.getJSONObject(i).getBoolean("alarmSoundOn="));
                     notifyObj.setWifiIsOn(loadJArray.getJSONObject(i).getBoolean("wifiIsOn="));
                     notifyObj.setBluetoothIsOn(loadJArray.getJSONObject(i).getBoolean("bluetoothIsOn="));
-                    notifyObj.setSoundVolume(loadJArray.getJSONObject(i).getInt("soundVolume="));
 
                     notifyArrayList.add(notifyObj);
                 }

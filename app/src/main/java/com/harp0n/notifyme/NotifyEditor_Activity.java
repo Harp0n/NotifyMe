@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ public class NotifyEditor_Activity extends Activity {
     Notify notification = new Notify("notify", "notify", "notify", false, 100);
 
     Button btnBt, btnVolume, btnData, btnPlane, btnWifi, btnCreate;
-    Button btnNext, btnBack;
+    Button btnBack;
 
     Switch sBt, sData, sPlane, sWifi, sOneTimeManyTimes;
 
@@ -144,10 +145,10 @@ public class NotifyEditor_Activity extends Activity {
         notification.setDescription(etDescription.getText().toString());
         notification.setNotificationMessage(etMessage.getText().toString());
 
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         notification.setRadius(intent.getExtras().getInt("radius"));
-        notification.setX_coordinate(intent.getExtras().getInt("Lat"));
-        notification.setY_coordinate(intent.getExtras().getInt("Lng"));
+        notification.setX_coordinate(intent.getExtras().getDouble("Lat"));
+        notification.setY_coordinate(intent.getExtras().getDouble("Lng"));
 
         notification.setOneTime(sOneTimeManyTimes.isChecked());
 
@@ -181,8 +182,7 @@ public class NotifyEditor_Activity extends Activity {
     public void sendingToSerialization()
     {
         createNotify();
-        Serialization ser = new Serialization();
-        ser.save(notification, NotifyEditor_Activity.this);
+        Serialization.save(notification, NotifyEditor_Activity.this);
     }
 
 

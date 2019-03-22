@@ -61,6 +61,8 @@ public class ManagerService extends Service {
             else
                 lastLocation.set(location);
             //notifications = Serialization.load();
+            if (notifications == null)
+                return;
             for (Notify notification : notifications) {
                 int ID = notification.getID();
 
