@@ -1,11 +1,12 @@
 package com.harp0n.notifyme;
 
-import android.app.AlarmManager;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -15,14 +16,10 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.AudioManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
+
 
 public class ManagerService extends Service {
     private static ManagerService sInstance;
@@ -160,6 +157,7 @@ public class ManagerService extends Service {
     }
 
     @Override
+    @SuppressLint("NewApi")
     public void onCreate() {
 
         Log.e(TAG, "onCreate");
@@ -274,7 +272,7 @@ public class ManagerService extends Service {
             mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }
     }
-
+    @SuppressLint("NewApi")
     private void sendNotification(String notificationTitle, String notificationText) {
         // Get an instance of the Notification manager
         NotificationManager mNotificationManager =

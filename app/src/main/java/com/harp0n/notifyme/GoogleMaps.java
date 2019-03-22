@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -145,6 +146,7 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
                  Intent next = new Intent(GoogleMaps.this,NotifyEditor_Activity.class);
                   next.putExtra("Lat",marker.getPosition().latitude);
                     next.putExtra("Lng",marker.getPosition().longitude);
+                        next.putExtra("radius", radiusBarr.getProgress());
                  startActivity(next);
             }
         });
