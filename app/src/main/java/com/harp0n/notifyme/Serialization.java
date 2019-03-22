@@ -141,6 +141,14 @@ public class Serialization extends Main_Activity{
                     array.remove(i);
                 }
             }
+
+            Writer output;
+            File file = new File(context.getFilesDir().getAbsolutePath() + "/storage.json");
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(array.toString());
+            output.close();
+            Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show();
+
         }
         catch(Exception e){
             e.printStackTrace();

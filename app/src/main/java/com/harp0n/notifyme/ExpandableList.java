@@ -69,14 +69,14 @@ public class ExpandableList extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        Notify n = notifies[groupPosition];
+        final Notify n = notifies[groupPosition];
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         LinearLayout buttons = new LinearLayout(context);
         buttons.setOrientation(LinearLayout.HORIZONTAL);
 
-        Button deleteButton = new Button(context);
+        final Button deleteButton = new Button(context);
         Button editButton = new Button(context);
 
         TextView nameView = new TextView(context);
@@ -99,8 +99,13 @@ public class ExpandableList extends BaseExpandableListAdapter {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO serialization.remove(n.getID())
-            }
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Serialization.remove(n,context);
+
+                    }
+                });            }
         });
 
         editButton.setOnClickListener(new View.OnClickListener() {
