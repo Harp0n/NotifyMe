@@ -100,12 +100,8 @@ public class ManagerService extends Service {
                         setAlarm();
                     //Usuwanie jeśli jest jednorazowe
                     if(notification.isOneTime()){
-                        //TODO usuwanie poprzez Serialization
                         Serialization.remove(notification, getApplicationContext());
                     }
-                }
-                else {
-                    Log.d("Odleglosc od "+notification.getName(), String.valueOf(notification.getLocation().distanceTo(location)));
                 }
             }
         }
@@ -126,11 +122,6 @@ public class ManagerService extends Service {
         }
 
     }
-
-//    LocationListener[] mLocationListeners = new LocationListener[]{
-//            new LocationListener(LocationManager.GPS_PROVIDER),
-//            new LocationListener(LocationManager.NETWORK_PROVIDER)
-//    };
 
     LocationListener[] mLocationListeners = new LocationListener[]{
             new LocationListener(LocationManager.PASSIVE_PROVIDER)
@@ -158,13 +149,10 @@ public class ManagerService extends Service {
         return START_STICKY;
     }
 
-    @Override
-    @SuppressLint("NewApi")
-    public void onCreate() {
 
-        Log.e(TAG, "onCreate");
-        //save instance
-        sInstance = this;
+    //CREATE NOTIFICATION
+    @SuppressLint("NewApi")
+    private void createForegroundNotification() {
         // Get an instance of the Notification manager
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -175,6 +163,7 @@ public class ManagerService extends Service {
             // Create the channel for the notification
             NotificationChannel mChannel =
                     new NotificationChannel(CHANNEL_MAIN_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+            //silence
             mChannel.enableVibration(false);
             mChannel.setSound(null, null);
             // Set the Notification Channel for the Notification Manager.
@@ -184,6 +173,7 @@ public class ManagerService extends Service {
         // Create an explicit content Intent that starts the main Activity.
         Intent notificationIntent = new Intent(getApplicationContext(), Main_Activity.class);
 
+        //send source information
         notificationIntent.putExtra("isFromNotification", true);
 
         // Construct a task stack.
@@ -202,7 +192,6 @@ public class ManagerService extends Service {
         // Get a notification builder that's compatible with platform versions >= 4
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
-        Notification notification = new Notification();
         // Define the notification settings.
         builder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 // In a real app, you may want to use a library like Volley
@@ -220,8 +209,16 @@ public class ManagerService extends Service {
 
         //keep notification in foreground
         startForeground(FOREGROUND_ID, builder.build());
-        initializeLocationManager();
+    }
 
+    private void initializeLocationManager() {
+        Log.e(TAG, "initializeLocationManager - LOCATION_INTERVAL: " + LOCATION_INTERVAL + " LOCATION_DISTANCE: " + LOCATION_DISTANCE);
+        if (mLocationManager == null) {
+            mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        }
+    }
+
+    private void startLocationListening() {
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.PASSIVE_PROVIDER,
@@ -234,19 +231,20 @@ public class ManagerService extends Service {
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "network provider does not exist, " + ex.getMessage());
         }
+    }
 
-        /*try {
-            mLocationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    LOCATION_INTERVAL,
-                    LOCATION_DISTANCE,
-                    mLocationListeners[1]
-            );
-        } catch (java.lang.SecurityException ex) {
-            Log.i(TAG, "fail to request location update, ignore", ex);
-        } catch (IllegalArgumentException ex) {
-            Log.d(TAG, "gps provider does not exist " + ex.getMessage());
-        }*/
+    private void stopLocationListening() {
+        mLocationManager.removeUpdates(mLocationListeners[0]);
+    }
+
+    @Override
+    @SuppressLint("NewApi")
+    public void onCreate() {
+        //save local instance
+        sInstance = this;
+        createForegroundNotification();
+        initializeLocationManager();
+        startLocationListening();
     }
 
     @Override
@@ -268,12 +266,6 @@ public class ManagerService extends Service {
         }
     }
 
-    private void initializeLocationManager() {
-        Log.e(TAG, "initializeLocationManager - LOCATION_INTERVAL: "+ LOCATION_INTERVAL + " LOCATION_DISTANCE: " + LOCATION_DISTANCE);
-        if (mLocationManager == null) {
-            mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        }
-    }
     @SuppressLint("NewApi")
     private void sendNotification(String notificationTitle, String notificationText) {
         // Get an instance of the Notification manager
