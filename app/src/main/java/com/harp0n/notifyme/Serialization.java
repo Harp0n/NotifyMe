@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,6 +20,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.json.JSONException;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.InputStreamReader;
 import java.io.Writer;
@@ -70,21 +74,34 @@ public class Serialization extends Main_Activity{
 
     public static void save(Notify notifyObj, Context context) {
         JSONObject dataJObject = new JSONObject();
+        JSONParser parser = new JSONParser();
         //przypisanie do obiektu json danych wprowadzonych przez usera w celu zapisania ich
         try{
-            dataJObject.put("ID",notifyObj.getID());
+            dataJObject = (JSONObject) parser.parse(notifyObj.toString());
+           /* dataJObject.put("ID",notifyObj.getID());
+            dataJObject.put(" x_coordinate=",notifyObj.getX_coordinate());
+            dataJObject.put(" y_coordinate=",notifyObj.getY_coordinate());
+            dataJObject.put(" radius=",notifyObj.getRadius());
             dataJObject.put("name=", notifyObj.getName());
             dataJObject.put("description=", notifyObj.getDescription());
             dataJObject.put("notificationMessage=",notifyObj.getNotificationMessage());
             dataJObject.put("isOneTime=",notifyObj.isOneTime());
             dataJObject.put("volumeChangeOn=",notifyObj.isVolumeChangeOn());
-            dataJObject.put("wifiChangeOn=",notifyObj.isWifiChangeOn());
-            dataJObject.put("bluetoothChangeOn=",notifyObj.isBluetoothChangeOn());
-            dataJObject.put("alarmSoundOn=",notifyObj.isAlarmSoundIsOn());
-            dataJObject.put("wifiIsOn=",notifyObj.isWifiChangeOn());
-            dataJObject.put("bluetoothIsOn=",notifyObj.isBluetoothIsOn());
             dataJObject.put("soundVolume=",notifyObj.getSoundVolume());
-        } catch (JSONException e) {
+            dataJObject.put("wifiChangeOn=",notifyObj.isWifiChangeOn());
+            dataJObject.put("wifiIsOn=",notifyObj.isWifiChangeOn());
+            dataJObject.put("bluetoothChangeOn=",notifyObj.isBluetoothChangeOn());
+            dataJObject.put("bluetoothIsOn=",notifyObj.isBluetoothIsOn());
+            dataJObject.put("phoneDataChangeOn=",notifyObj.isPhoneDataChangeOn());
+            dataJObject.put("phoneDataIsOn=",notifyObj.isPhoneDataIsOn());
+            dataJObject.put("planeModeChangeOn=",notifyObj.isPlaneModeChangeOn());
+            dataJObject.put("planeModeIsOn=",notifyObj.isPlaneModeIsOn());
+            dataJObject.put("alarmSoundChangeOn=",notifyObj.isAlarmSoundChangeOn());
+            dataJObject.put("alarmSoundIsOn=",notifyObj.isAlarmSoundIsOn());*/
+
+        //} catch (JSONException e) {
+        //    e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -159,6 +176,7 @@ public class Serialization extends Main_Activity{
 
         ArrayList<Notify> notifyArrayList = new ArrayList<>();
         Notify notifyObj = null;
+        ObjectMapper mapper = new ObjectMapper();
         String jsonString = read(context, "storage.json");
         try {
             JSONArray loadJArray = new JSONArray(jsonString);
@@ -166,7 +184,8 @@ public class Serialization extends Main_Activity{
             // tworzenie obiektów Notify i wpisanie ich do notifyArrayList
             for (int i = 0; i < loadJArray.length(); i++) {
                 try {
-                    String name = loadJArray.getJSONObject(i).getString("name=");
+                    notifyObj = mapper.readValue(loadJArray.getJSONObject(i).toString(),Notify.class);
+                    /*String name = loadJArray.getJSONObject(i).getString("name=");
                     String description = loadJArray.getJSONObject(i).getString("description=");
                     String notificationMessage = loadJArray.getJSONObject(i).getString("notificationMessage=");
                     boolean isOneTime = loadJArray.getJSONObject(i).getBoolean("isOneTime=");
@@ -179,7 +198,7 @@ public class Serialization extends Main_Activity{
                     notifyObj.setAlarmSoundChangeOn(loadJArray.getJSONObject(i).getBoolean("alarmSoundOn="));
                     notifyObj.setWifiIsOn(loadJArray.getJSONObject(i).getBoolean("wifiIsOn="));
                     notifyObj.setBluetoothIsOn(loadJArray.getJSONObject(i).getBoolean("bluetoothIsOn="));
-
+*/
                     notifyArrayList.add(notifyObj);
                 }
                 catch (Exception e) {
