@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,8 +20,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.json.JSONException;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.InputStreamReader;
 import java.io.Writer;
@@ -74,10 +72,13 @@ public class Serialization extends Main_Activity{
 
     public static void save(Notify notifyObj, Context context) {
         JSONObject dataJObject = new JSONObject();
-        JSONParser parser = new JSONParser();
+        //JSONParser parser = new JSONParser();
+        Gson gson = new Gson();
         //przypisanie do obiektu json danych wprowadzonych przez usera w celu zapisania ich
         try{
-            dataJObject = (JSONObject) parser.parse(notifyObj.toString());
+            String json = gson.toJson(notifyObj);
+            System.out.println(json);
+            dataJObject = new JSONObject(json);
            /* dataJObject.put("ID",notifyObj.getID());
             dataJObject.put(" x_coordinate=",notifyObj.getX_coordinate());
             dataJObject.put(" y_coordinate=",notifyObj.getY_coordinate());
@@ -99,9 +100,7 @@ public class Serialization extends Main_Activity{
             dataJObject.put("alarmSoundChangeOn=",notifyObj.isAlarmSoundChangeOn());
             dataJObject.put("alarmSoundIsOn=",notifyObj.isAlarmSoundIsOn());*/
 
-        //} catch (JSONException e) {
-        //    e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -175,8 +174,7 @@ public class Serialization extends Main_Activity{
     public static ArrayList<Notify> load(Context context){
 
         ArrayList<Notify> notifyArrayList = new ArrayList<>();
-        Notify notifyObj = null;
-        ObjectMapper mapper = new ObjectMapper();
+        Gson gson = new Gson();
         String jsonString = read(context, "storage.json");
         try {
             JSONArray loadJArray = new JSONArray(jsonString);
@@ -184,7 +182,8 @@ public class Serialization extends Main_Activity{
             // tworzenie obiektów Notify i wpisanie ich do notifyArrayList
             for (int i = 0; i < loadJArray.length(); i++) {
                 try {
-                    notifyObj = mapper.readValue(loadJArray.getJSONObject(i).toString(),Notify.class);
+                    Notify notify = gson.fromJson(loadJArray.getJSONObject(i).toString(),Notify.class);
+                    //notifyObj = mapper.readValue(loadJArray.getJSONObject(i).toString(),Notify.class);
                     /*String name = loadJArray.getJSONObject(i).getString("name=");
                     String description = loadJArray.getJSONObject(i).getString("description=");
                     String notificationMessage = loadJArray.getJSONObject(i).getString("notificationMessage=");
@@ -199,7 +198,7 @@ public class Serialization extends Main_Activity{
                     notifyObj.setWifiIsOn(loadJArray.getJSONObject(i).getBoolean("wifiIsOn="));
                     notifyObj.setBluetoothIsOn(loadJArray.getJSONObject(i).getBoolean("bluetoothIsOn="));
 */
-                    notifyArrayList.add(notifyObj);
+                    notifyArrayList.add(notify);
                 }
                 catch (Exception e) {
                     e.printStackTrace();
