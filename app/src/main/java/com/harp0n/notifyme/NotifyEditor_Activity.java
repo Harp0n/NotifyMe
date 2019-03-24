@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class NotifyEditor_Activity extends Activity {
 
@@ -121,9 +122,7 @@ public class NotifyEditor_Activity extends Activity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendingToSerialization();
-                Intent myIntent = new Intent(NotifyEditor_Activity.this, Main_Activity.class);
-                NotifyEditor_Activity.this.startActivity(myIntent);
+                createNotify();
             }
         });
     }
@@ -141,49 +140,50 @@ public class NotifyEditor_Activity extends Activity {
 
     public void createNotify()
     {
-        notification.setName(etName.getText().toString());
-        notification.setDescription(etDescription.getText().toString());
-        notification.setNotificationMessage(etMessage.getText().toString());
 
-        Intent intent = getIntent();
-        notification.setRadius(intent.getExtras().getInt("radius"));
-        notification.setX_coordinate(intent.getExtras().getDouble("Lat"));
-        notification.setY_coordinate(intent.getExtras().getDouble("Lng"));
+        if(etName.getText().toString().equals("")) {
+            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
 
-        notification.setOneTime(sOneTimeManyTimes.isChecked());
+                notification.setName(etName.getText().toString());
+                notification.setDescription(etDescription.getText().toString());
+                notification.setNotificationMessage(etMessage.getText().toString());
 
-        if(notification.isVolumeChangeOn())
-        {
-            notification.setSoundVolume(sbVolume.getProgress());
+                Intent intent = getIntent();
+                notification.setRadius(intent.getExtras().getInt("radius"));
+                notification.setX_coordinate(intent.getExtras().getDouble("Lat"));
+                notification.setY_coordinate(intent.getExtras().getDouble("Lng"));
+
+                notification.setOneTime(sOneTimeManyTimes.isChecked());
+
+                if (notification.isVolumeChangeOn()) {
+                    notification.setSoundVolume(sbVolume.getProgress());
+                }
+                if (sBt.getVisibility() == View.VISIBLE) {
+                    notification.setBluetoothIsOn(sBt.isChecked());
+                }
+                if (sWifi.getVisibility() == View.VISIBLE) {
+                    notification.setWifiIsOn(sWifi.isChecked());
+                }
+                if (sBt.getVisibility() == View.VISIBLE) {
+                    notification.setBluetoothIsOn(sBt.isChecked());
+                }
+                if (sData.getVisibility() == View.VISIBLE) {
+                    notification.setPhoneDataIsOn(sBt.isChecked());
+                }
+                if (sPlane.getVisibility() == View.VISIBLE) {
+                    notification.setPlaneModeIsOn(sPlane.isChecked());
+                }
+                 Serialization.save(notification, NotifyEditor_Activity.this);
+                 Intent myIntent = new Intent(NotifyEditor_Activity.this, Main_Activity.class);
+                 NotifyEditor_Activity.this.startActivity(myIntent);
+                 Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+
         }
-        if(sBt.getVisibility() == View.VISIBLE)
-        {
-            notification.setBluetoothIsOn(sBt.isChecked());
-        }
-        if(sWifi.getVisibility() == View.VISIBLE)
-        {
-            notification.setWifiIsOn(sWifi.isChecked());
-        }
-        if(sBt.getVisibility() == View.VISIBLE)
-        {
-            notification.setBluetoothIsOn(sBt.isChecked());
-        }
-        if(sData.getVisibility() == View.VISIBLE)
-        {
-            notification.setPhoneDataIsOn(sBt.isChecked());
-        }
-        if(sPlane.getVisibility() == View.VISIBLE)
-        {
-            notification.setPlaneModeIsOn(sPlane.isChecked());
         }
 
-    }
-
-    public void sendingToSerialization()
-    {
-        createNotify();
-        Serialization.save(notification, NotifyEditor_Activity.this);
-    }
+    };
 
 
-}
+

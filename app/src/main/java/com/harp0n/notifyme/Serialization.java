@@ -1,5 +1,6 @@
 package com.harp0n.notifyme;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -211,4 +212,5 @@ public class Serialization extends Main_Activity{
 
         return notifyArrayList;
     }
+
 }
