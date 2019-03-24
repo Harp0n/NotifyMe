@@ -175,6 +175,7 @@ public class NotifyEditor_Activity extends Activity {
                 if (sPlane.getVisibility() == View.VISIBLE) {
                     notification.setPlaneModeIsOn(sPlane.isChecked());
                 }
+
                  Serialization.save(notification, NotifyEditor_Activity.this);
                  Intent myIntent = new Intent(NotifyEditor_Activity.this, Main_Activity.class);
                  NotifyEditor_Activity.this.startActivity(myIntent);
