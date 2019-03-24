@@ -133,6 +133,7 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
         });
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,7 +189,7 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
             currentLocation = ManagerService.getInstance().getLastLocation();
             home = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         } else
-            home = new LatLng(51.110393, 17.035653);
+            home = new LatLng(50.284882, 19.162622);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoom));
         circle = mMap.addCircle(new CircleOptions()
