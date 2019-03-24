@@ -60,7 +60,7 @@ public class ManagerService extends Service {
                 lastLocation = new Location(location);
             else
                 lastLocation.set(location);
-            //notifications = Serialization.load();
+            notifications = Serialization.load(getApplicationContext());
             if (notifications == null)
                 return;
             for (Notify notification : notifications) {
@@ -71,7 +71,7 @@ public class ManagerService extends Service {
                 }
 
                 boolean isInRange = notification.getLocation().distanceTo(location) <= notification.getRadius();
-                if (!isInRange && isInsideMap.get(ID) == true) {
+                if (!isInRange && isInsideMap.get(ID)) {
                     isInsideMap.remove(ID);
                     isInsideMap.put(ID, false);
                     Log.d("Wychodze: ", notification.getDescription());

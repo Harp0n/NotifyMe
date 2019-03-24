@@ -124,8 +124,8 @@ public class Notify {
         this.notificationMessage = notificationMessage;
     }
     public Location getLocation() { Location location = new  Location("");
-        location.setLatitude(getY_coordinate());
-        location.setLongitude(getX_coordinate());
+        location.setLatitude(getX_coordinate());
+        location.setLongitude(getY_coordinate());
         return location; }
 
     public boolean isOneTime() {
