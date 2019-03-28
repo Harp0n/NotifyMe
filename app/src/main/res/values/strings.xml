@@ -19,7 +19,7 @@
     <string name="name">Name</string>
     <string name="set_description_to_your_notify">Set description to your notify:</string>
     <string name="set_notify_message">Set Notify message:</string>
-    <string name="notify_me_one_many_times">Notify me One/Many times</string>
+    <string name="notify_me_one_many_times">Notify me many times</string>
     <string name="wifi_changes">Wifi Changes:</string>
     <string name="wifi_should_be">Wifi should be:</string>
     <string name="bluetooth_changes">Bluetooth Changes</string>
