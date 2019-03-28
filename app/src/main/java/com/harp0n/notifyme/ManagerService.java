@@ -86,6 +86,8 @@ public class ManagerService extends Service {
                     //Wysyłanie powiadomienia
                     if(!notification.getNotificationMessage().isEmpty())
                         sendNotification(notification.getName(),notification.getNotificationMessage());
+                    else
+                        sendNotification(notification.getName(), "cel osiągnięty");
                     //Przełączenie głośności
                     if(notification.isVolumeChangeOn())
                         setVolume(notification.getSoundVolume());
