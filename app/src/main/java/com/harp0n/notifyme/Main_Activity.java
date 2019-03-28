@@ -96,6 +96,10 @@ public class Main_Activity extends Activity {
 //                Manifest.permission.ACCESS_FINE_LOCATION);
 //        return permissionState == PackageManager.PERMISSION_GRANTED;
 //    }
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 
     private void requestPermissions() {
         boolean shouldProvideRationale =

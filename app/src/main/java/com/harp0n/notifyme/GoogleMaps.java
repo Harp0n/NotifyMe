@@ -148,7 +148,11 @@ public class GoogleMaps extends AppCompatActivity implements GoogleMap.OnMyLocat
                   next.putExtra("Lat",marker.getPosition().latitude);
                     next.putExtra("Lng",marker.getPosition().longitude);
                         next.putExtra("radius", radiusBarr.getProgress());
-                 startActivity(next);
+                    Intent intent = getIntent();
+                        next.putExtra("edit", intent.getExtras().getBoolean("edit"));
+                        next.putExtra("id", intent.getExtras().getInt(  "id"));
+
+                startActivity(next);
             }
         });
          intent = getIntent();

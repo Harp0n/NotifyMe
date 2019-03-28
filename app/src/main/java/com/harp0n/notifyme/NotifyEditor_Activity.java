@@ -34,6 +34,11 @@ public class NotifyEditor_Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notify_editor_);
+        Intent intent = getIntent();
+        toEdit = intent.getExtras().getBoolean("edit");
+        idToEdit = intent.getExtras().getInt("id");
+
+
         btnBt = findViewById(R.id.btnBluetooth);
         btnVolume = findViewById(R.id.btnVolume);
         btnData = findViewById(R.id.btnPhoneData);
@@ -120,8 +125,6 @@ public class NotifyEditor_Activity extends Activity {
 
             }
         });
-
-
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
