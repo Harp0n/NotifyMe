@@ -44,6 +44,10 @@ public class ManagerService extends Service {
     private Location lastLocation;
     Map<Integer, Boolean> isInsideMap = new HashMap<Integer, Boolean>();
 
+    public void RefreshNotifies() {
+        notifications = Serialization.load(getApplicationContext());
+    }
+
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
 
@@ -60,7 +64,7 @@ public class ManagerService extends Service {
                 lastLocation = new Location(location);
             else
                 lastLocation.set(location);
-            notifications = Serialization.load(getApplicationContext());
+            //notifications = Serialization.load(getApplicationContext());
             if (notifications == null)
                 return;
             for (Notify notification : notifications) {

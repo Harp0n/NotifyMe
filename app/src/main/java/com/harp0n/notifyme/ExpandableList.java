@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ExpandableList extends BaseExpandableListAdapter {
     private final int TITLE_TXT_SIZE = 40;
     private final int EXP_TXT_SIZE = 16;
@@ -19,6 +21,17 @@ public class ExpandableList extends BaseExpandableListAdapter {
     public ExpandableList(Context context, Notify[] notifies){
         this.context = context;
         this.notifies = notifies;
+    }
+
+    private void RefreshNotifies() {
+        ArrayList<Notify> notifyArrayList = Serialization.load(context);
+        Notify[] ns = new Notify[notifyArrayList.size()];
+        if (notifyArrayList != null) {
+            for (int i = 0; i < ns.length; i++) {
+                ns[i] = notifyArrayList.get(i);
+            }
+        }
+        notifies = ns;
     }
 
     @Override
@@ -103,6 +116,7 @@ public class ExpandableList extends BaseExpandableListAdapter {
                     @Override
                     public void onClick(View v) {
                         Serialization.remove(n,context);
+                        RefreshNotifies();
                     }
                 });
             }
