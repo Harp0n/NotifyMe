@@ -55,7 +55,7 @@ public class NotifyEditor_Activity extends Activity {
         sWifi = findViewById(R.id.switchWifi);
         sOneTimeManyTimes = findViewById(R.id.switchIsOneTime);
 
-        btnBack = findViewById(R.id.btnBack);
+
 
         btnBt.setOnClickListener(new View.OnClickListener() {
             @Override
