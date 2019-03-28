@@ -12,6 +12,8 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class NotifyEditor_Activity extends Activity {
 
     Notify notification = new Notify("notify", "notify", "notify", false, 100);
@@ -25,6 +27,8 @@ public class NotifyEditor_Activity extends Activity {
 
     SeekBar sbVolume;
 
+    boolean toEdit = false; // czy mamy edytowac czy utworzyc
+    int idToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +142,42 @@ public class NotifyEditor_Activity extends Activity {
         }
     }
 
+    public void createObject(){
+        notification.setName(etName.getText().toString());
+        notification.setDescription(etDescription.getText().toString());
+        notification.setNotificationMessage(etMessage.getText().toString());
+
+        Intent intent = getIntent();
+        notification.setRadius(intent.getExtras().getInt("radius"));
+        notification.setX_coordinate(intent.getExtras().getDouble("Lat"));
+        notification.setY_coordinate(intent.getExtras().getDouble("Lng"));
+
+        notification.setOneTime(sOneTimeManyTimes.isChecked());
+
+        if (notification.isVolumeChangeOn()) {
+            notification.setSoundVolume(sbVolume.getProgress());
+        }
+        if (sBt.getVisibility() == View.VISIBLE) {
+            notification.setBluetoothIsOn(sBt.isChecked());
+        }
+        if (sWifi.getVisibility() == View.VISIBLE) {
+            notification.setWifiIsOn(sWifi.isChecked());
+        }
+        if (sBt.getVisibility() == View.VISIBLE) {
+            notification.setBluetoothIsOn(sBt.isChecked());
+        }
+        if (sData.getVisibility() == View.VISIBLE) {
+            notification.setPhoneDataIsOn(sBt.isChecked());
+        }
+        if (sPlane.getVisibility() == View.VISIBLE) {
+            notification.setPlaneModeIsOn(sPlane.isChecked());
+        }
+
+        Serialization.save(notification, NotifyEditor_Activity.this);
+        Intent myIntent = new Intent(NotifyEditor_Activity.this, Main_Activity.class);
+        NotifyEditor_Activity.this.startActivity(myIntent);
+        Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+    }
     public void createNotify()
     {
 
@@ -146,40 +186,26 @@ public class NotifyEditor_Activity extends Activity {
             return;
         } else {
 
-                notification.setName(etName.getText().toString());
-                notification.setDescription(etDescription.getText().toString());
-                notification.setNotificationMessage(etMessage.getText().toString());
+            if(toEdit)
+            {
+                ArrayList<Notify> listNotify = Serialization.load(NotifyEditor_Activity.this);
 
-                Intent intent = getIntent();
-                notification.setRadius(intent.getExtras().getInt("radius"));
-                notification.setX_coordinate(intent.getExtras().getDouble("Lat"));
-                notification.setY_coordinate(intent.getExtras().getDouble("Lng"));
-
-                notification.setOneTime(sOneTimeManyTimes.isChecked());
-
-                if (notification.isVolumeChangeOn()) {
-                    notification.setSoundVolume(sbVolume.getProgress());
-                }
-                if (sBt.getVisibility() == View.VISIBLE) {
-                    notification.setBluetoothIsOn(sBt.isChecked());
-                }
-                if (sWifi.getVisibility() == View.VISIBLE) {
-                    notification.setWifiIsOn(sWifi.isChecked());
-                }
-                if (sBt.getVisibility() == View.VISIBLE) {
-                    notification.setBluetoothIsOn(sBt.isChecked());
-                }
-                if (sData.getVisibility() == View.VISIBLE) {
-                    notification.setPhoneDataIsOn(sBt.isChecked());
-                }
-                if (sPlane.getVisibility() == View.VISIBLE) {
-                    notification.setPlaneModeIsOn(sPlane.isChecked());
+                for(int i=0; i < listNotify.size(); i++)
+                {
+                    if(listNotify.get(i).getID() == idToEdit)
+                    {
+                        Serialization.remove(listNotify.get(i), NotifyEditor_Activity.this);
+                    }
                 }
 
-                 Serialization.save(notification, NotifyEditor_Activity.this);
-                 Intent myIntent = new Intent(NotifyEditor_Activity.this, Main_Activity.class);
-                 NotifyEditor_Activity.this.startActivity(myIntent);
-                 Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+                createObject();
+
+
+            }
+            else {
+
+                createObject();
+            }
 
         }
         }
