@@ -20,6 +20,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import androidx.core.app.NotificationCompat;
 
 public class ManagerService extends Service {
     private static ManagerService sInstance;
+    //private PowerManager.WakeLock wakelock;
     private static final String TAG = "ManagerService";
     private static final String CHANNEL_ID = "channel_01";
     private static final String CHANNEL_MAIN_ID = "channel_02";
@@ -249,6 +251,9 @@ public class ManagerService extends Service {
         //save local instance
         sInstance = this;
         createForegroundNotification();
+//        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+//        wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "notify:wakelock");
+//        wakelock.acquire();
         initializeLocationManager();
         startLocationListening();
     }
