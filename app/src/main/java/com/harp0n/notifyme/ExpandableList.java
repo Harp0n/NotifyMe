@@ -30,8 +30,9 @@ public class ExpandableList extends BaseExpandableListAdapter {
             for (int i = 0; i < ns.length; i++) {
                 ns[i] = notifyArrayList.get(i);
             }
+            notifies = ns;
+            notifyDataSetChanged();
         }
-        notifies = ns;
     }
 
     @Override
