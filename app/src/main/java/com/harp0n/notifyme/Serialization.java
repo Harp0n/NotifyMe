@@ -215,4 +215,19 @@ public class Serialization extends Main_Activity{
         return notifyArrayList;
     }
 
+
+    // motoda czyszcząca bazę danych
+    public static void Clear(Context context) throws IOException {
+
+        JSONArray array = new JSONArray();
+
+        Writer output;
+        File file = new File(context.getFilesDir().getAbsolutePath() + "/storage.json");
+        output = new BufferedWriter(new FileWriter(file));
+        output.write(array.toString());
+        output.close();
+        Toast.makeText(context, "Clearing completed", Toast.LENGTH_LONG).show();
+
+    }
+
 }
