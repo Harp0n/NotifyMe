@@ -109,6 +109,7 @@ public class NotifyEditor_Activity extends Activity {
     }
 
 
+
     public void clickButtonToShowSwitch(Switch s)
     {
         if(s.getVisibility() == View.INVISIBLE)
