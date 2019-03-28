@@ -110,6 +110,7 @@ public class Serialization extends Main_Activity{
         if(!isFilePresent) {
             boolean isFileCreated = create(context, "storage.json", "{}");
         }
+
         // wczytywanie danych z pliku
         String jsonString = read(context, "storage.json");
         //objDataArray = new JSONArray(jsonString);
@@ -122,20 +123,31 @@ public class Serialization extends Main_Activity{
                 dataJArray = new JSONArray(jsonString);
             else
                 dataJArray = new JSONArray();
-            dataJArray.put(dataJObject);
+
             // zapisywanie do pliku
             Writer output;
             File file = new File(context.getFilesDir().getAbsolutePath() + "/storage.json");
             output = new BufferedWriter(new FileWriter(file));
 
+            int ID;
+
             // pobranie id ostatniego obiektu z pliku
-            //ID = objDataArray.getJSONObject(objDataArray.length()-1).getInt("ID") + 1;
-            //objJSONObject.put("ID",ID);
-            //objDataArray.put(objJSONObject);
+            if(dataJArray.length() == 0) {
+                ID = 0;
+            }
+            else {
+                ID = dataJArray.getJSONObject(dataJArray.length() - 1).getInt("ID") + 1;
+            }
+            dataJObject.put("ID",ID);
+            dataJArray.put(dataJObject);
 
             // wpisanie do pliku storage.json tablicy
             output.write(dataJArray.toString());
             output.close();
+
+            // aktualizowanie dB dla serviceManager
+            ManagerService.getInstance().RefreshNotifies();
+
             Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show();
         }
         catch(Exception e){
@@ -150,11 +162,15 @@ public class Serialization extends Main_Activity{
 
     public static void remove(Notify notifyObj, Context context) {
         String jsonString = read(context, "storage.json");
+
+        Gson gson = new Gson();
         try{
             JSONArray array = new JSONArray(jsonString);
             for(int i = 0; i < array.length();i++) {
                 // szuaknie obiektu po ID i usinięcie go
-                if(array.getJSONObject(i).getInt("ID") == notifyObj.getID()) if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Notify notify = gson.fromJson(array.getJSONObject(i).toString(),Notify.class);
+
+                if(notify.getID() == notifyObj.getID()) if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     array.remove(i);
                 }
             }
@@ -184,21 +200,7 @@ public class Serialization extends Main_Activity{
             for (int i = 0; i < loadJArray.length(); i++) {
                 try {
                     Notify notify = gson.fromJson(loadJArray.getJSONObject(i).toString(),Notify.class);
-                    //notifyObj = mapper.readValue(loadJArray.getJSONObject(i).toString(),Notify.class);
-                    /*String name = loadJArray.getJSONObject(i).getString("name=");
-                    String description = loadJArray.getJSONObject(i).getString("description=");
-                    String notificationMessage = loadJArray.getJSONObject(i).getString("notificationMessage=");
-                    boolean isOneTime = loadJArray.getJSONObject(i).getBoolean("isOneTime=");
-                    int soundVolume = loadJArray.getJSONObject(i).getInt("soundVolume=");
-                    notifyObj = new Notify(name, description, notificationMessage, isOneTime, soundVolume);
-                    notifyObj.setID(loadJArray.getJSONObject(i).getInt("ID"));
-                    notifyObj.setVolumeChangeOn(loadJArray.getJSONObject(i).getBoolean("volumeChangeOn="));
-                    notifyObj.setWifiChangeOn(loadJArray.getJSONObject(i).getBoolean("wifiChangeOn="));
-                    notifyObj.setBluetoothChangeOn(loadJArray.getJSONObject(i).getBoolean("bluetoothChangeOn="));
-                    notifyObj.setAlarmSoundChangeOn(loadJArray.getJSONObject(i).getBoolean("alarmSoundOn="));
-                    notifyObj.setWifiIsOn(loadJArray.getJSONObject(i).getBoolean("wifiIsOn="));
-                    notifyObj.setBluetoothIsOn(loadJArray.getJSONObject(i).getBoolean("bluetoothIsOn="));
-*/
+
                     notifyArrayList.add(notify);
                 }
                 catch (Exception e) {
