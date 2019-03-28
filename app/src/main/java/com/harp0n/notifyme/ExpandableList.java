@@ -112,13 +112,8 @@ public class ExpandableList extends BaseExpandableListAdapter {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Serialization.remove(n,context);
-                        RefreshNotifies();
-                    }
-                });
+                Serialization.remove(n, context);
+                RefreshNotifies();
             }
         });
 
