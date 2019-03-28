@@ -114,6 +114,8 @@ public class NotifyEditor_Activity extends Activity {
 
             }
         });
+
+
         btnPlane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
