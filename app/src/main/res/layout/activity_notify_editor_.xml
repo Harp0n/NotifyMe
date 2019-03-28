@@ -180,38 +180,6 @@
                     tools:layout_editor_absoluteX="153dp"
                     tools:layout_editor_absoluteY="386dp" />
 
-                <Button
-                    android:id="@+id/btnPhoneData"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone_data" />
-
-                <Switch
-                    android:id="@+id/switchPhoneData"
-                    android:layout_width="match_parent"
-                    android:layout_height="61dp"
-                    android:text="@string/phone_data_should_be"
-                    android:textSize="18sp"
-                    android:visibility="invisible"
-                    tools:layout_editor_absoluteX="153dp"
-                    tools:layout_editor_absoluteY="386dp" />
-
-                <Button
-                    android:id="@+id/btnPlaneMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/plane_mode" />
-
-                <Switch
-                    android:id="@+id/switchPlaneMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="61dp"
-                    android:text="@string/plane_mode_should_be"
-                    android:textSize="18sp"
-                    android:visibility="invisible"
-                    tools:layout_editor_absoluteX="153dp"
-                    tools:layout_editor_absoluteY="386dp" />
-
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

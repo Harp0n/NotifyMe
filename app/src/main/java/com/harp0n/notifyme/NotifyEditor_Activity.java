@@ -41,8 +41,6 @@ public class NotifyEditor_Activity extends Activity {
 
         btnBt = findViewById(R.id.btnBluetooth);
         btnVolume = findViewById(R.id.btnVolume);
-        btnData = findViewById(R.id.btnPhoneData);
-        btnPlane = findViewById(R.id.btnPlaneMode);
         btnWifi = findViewById(R.id.btnWifi);
 
         btnCreate = findViewById(R.id.btnNext);
@@ -54,8 +52,6 @@ public class NotifyEditor_Activity extends Activity {
         etMessage = findViewById(R.id.et_NotifyMessage);
 
         sBt = findViewById(R.id.switchBluetooth);
-        sData = findViewById(R.id.switchPhoneData);
-        sPlane = findViewById(R.id.switchPlaneMode);
         sWifi = findViewById(R.id.switchWifi);
         sOneTimeManyTimes = findViewById(R.id.switchIsOneTime);
 
@@ -103,30 +99,6 @@ public class NotifyEditor_Activity extends Activity {
 
             }
         });
-        btnData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickButtonToShowSwitch(sData);
-                if(sData.getVisibility() == View.VISIBLE )
-                {
-                    notification.setPhoneDataChangeOn(true);
-                } else notification.setPhoneDataChangeOn(false);
-
-            }
-        });
-
-
-        btnPlane.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickButtonToShowSwitch(sPlane);
-                if(sPlane.getVisibility() == View.VISIBLE )
-                {
-                    notification.setPlaneModeChangeOn(true);
-                } else notification.setPlaneModeChangeOn(false);
-
-            }
-        });
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,13 +143,6 @@ public class NotifyEditor_Activity extends Activity {
         if (sBt.getVisibility() == View.VISIBLE) {
             notification.setBluetoothIsOn(sBt.isChecked());
         }
-        if (sData.getVisibility() == View.VISIBLE) {
-            notification.setPhoneDataIsOn(sBt.isChecked());
-        }
-        if (sPlane.getVisibility() == View.VISIBLE) {
-            notification.setPlaneModeIsOn(sPlane.isChecked());
-        }
-
         Serialization.save(notification, NotifyEditor_Activity.this);
         Intent myIntent = new Intent(NotifyEditor_Activity.this, Main_Activity.class);
         NotifyEditor_Activity.this.startActivity(myIntent);
