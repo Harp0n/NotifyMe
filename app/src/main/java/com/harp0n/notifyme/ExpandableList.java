@@ -103,15 +103,17 @@ public class ExpandableList extends BaseExpandableListAdapter {
                     @Override
                     public void onClick(View v) {
                         Serialization.remove(n,context);
-
                     }
-                });            }
+                });
+            }
         });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(context, NotifyEditor_Activity.class);
+                Intent myIntent = new Intent(context, GoogleMaps.class);
+                myIntent.putExtra("edit",true);
+                myIntent.putExtra("id",n.getID());
                 context.startActivity(myIntent);
             }
         });
