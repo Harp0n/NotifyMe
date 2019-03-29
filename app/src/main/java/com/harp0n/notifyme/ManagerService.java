@@ -34,6 +34,7 @@ import androidx.core.app.NotificationCompat;
 public class ManagerService extends Service {
     private static ManagerService sInstance;
     //private PowerManager.WakeLock wakelock;
+    private boolean isListening = false;
     private static final String TAG = "ManagerService";
     private static final String CHANNEL_ID = "channel_01";
     private static final String CHANNEL_MAIN_ID = "channel_02";
@@ -48,6 +49,7 @@ public class ManagerService extends Service {
 
     public void RefreshNotifies() {
         notifications = Serialization.load(getApplicationContext());
+        startLocationListening();
     }
 
     private class LocationListener implements android.location.LocationListener {
@@ -227,6 +229,8 @@ public class ManagerService extends Service {
     }
 
     private void startLocationListening() {
+        if(isListening)
+            return;
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.PASSIVE_PROVIDER,
@@ -234,6 +238,7 @@ public class ManagerService extends Service {
                     LOCATION_DISTANCE,
                     mLocationListeners[0]
             );
+            isListening = true;
         } catch (java.lang.SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
