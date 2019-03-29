@@ -21,7 +21,7 @@ public class NotifyEditor_Activity extends Activity {
     Button btnBt, btnVolume, btnData, btnPlane, btnWifi, btnCreate;
     Button btnBack;
 
-    Switch sBt, sData, sPlane, sWifi, sOneTimeManyTimes;
+    Switch sBt, sData, sPlane, sWifi, sOneTimeManyTimes, sAlarmSound;
 
     EditText etName, etDescription, etMessage;
 
@@ -54,6 +54,7 @@ public class NotifyEditor_Activity extends Activity {
         sBt = findViewById(R.id.switchBluetooth);
         sWifi = findViewById(R.id.switchWifi);
         sOneTimeManyTimes = findViewById(R.id.switchIsOneTime);
+        sAlarmSound = findViewById(R.id.switchIsAlarmSound);
 
 
 
@@ -131,6 +132,7 @@ public class NotifyEditor_Activity extends Activity {
         notification.setY_coordinate(intent.getExtras().getDouble("Lng"));
 
         notification.setOneTime(sOneTimeManyTimes.isChecked());
+        notification.setAlarmSoundIsOn(sAlarmSound.isChecked());
 
         if (notification.isVolumeChangeOn()) {
             notification.setSoundVolume(sbVolume.getProgress());

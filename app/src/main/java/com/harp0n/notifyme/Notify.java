@@ -35,7 +35,6 @@ public class Notify {
     private boolean planeModeChangeOn;
     private boolean planeModeIsOn;
 
-    private boolean alarmSoundChangeOn;
     private boolean alarmSoundIsOn;
 
     public Notify(String name, String description, String notificationMessage, boolean isOneTime, int soundVolume) {
@@ -57,7 +56,6 @@ public class Notify {
         this.phoneDataIsOn = false;
         this.planeModeChangeOn = false;
         this.planeModeIsOn = false;
-        this.alarmSoundChangeOn = false;
         this.alarmSoundIsOn = false;
 
         this.ID = this.hashCode();
@@ -216,14 +214,6 @@ public class Notify {
         this.planeModeIsOn = planeModeIsOn;
     }
 
-    public boolean isAlarmSoundChangeOn() {
-        return alarmSoundChangeOn;
-    }
-
-    public void setAlarmSoundChangeOn(boolean alarmSoundChangeOn) {
-        this.alarmSoundChangeOn = alarmSoundChangeOn;
-    }
-
     public boolean isAlarmSoundIsOn() {
         return alarmSoundIsOn;
     }
@@ -253,7 +243,6 @@ public class Notify {
                 ", phoneDataIsOn=" + phoneDataIsOn +
                 ", planeModeChangeOn=" + planeModeChangeOn +
                 ", planeModeIsOn=" + planeModeIsOn +
-                ", alarmSoundChangeOn=" + alarmSoundChangeOn +
                 ", alarmSoundIsOn=" + alarmSoundIsOn +
                 '}';
     }

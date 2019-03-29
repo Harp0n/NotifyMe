@@ -19,14 +19,15 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="347dp"
-        android:layout_height="541dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,14 +39,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.033">
+            app:layout_constraintVertical_bias="0.49">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,6 +57,7 @@
                     android:id="@+id/tvNotifyName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     android:text="@string/set_name_to_your_notify"
                     android:textSize="30sp"
                     tools:text="Set name to your Notify:" />
@@ -64,8 +66,11 @@
                     android:id="@+id/et_Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
                     android:autofillHints=""
                     android:ems="10"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:hint="@string/name"
                     android:inputType="textPersonName"
                     tools:targetApi="o"
@@ -83,7 +88,10 @@
                     android:id="@+id/et_Description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
                     android:ems="10"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:hint="@string/name"
                     android:inputType="textPersonName"
                     tools:text="Notify Description" />
@@ -100,7 +108,10 @@
                     android:id="@+id/et_NotifyMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
                     android:ems="10"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:hint="@string/name"
                     android:inputType="textPersonName"
                     tools:text="Notify Message" />
@@ -109,13 +120,29 @@
                     android:id="@+id/switchIsOneTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:text="@string/notify_me_one_many_times"
+                    android:textSize="18sp" />
+
+                <Switch
+                    android:id="@+id/switchIsAlarmSound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="@string/set_sound_alarm"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tvOptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
                     android:text="@string/notify_options_click_if_you_want_to_apply_it"
                     android:textSize="30sp" />
 
@@ -124,6 +151,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/volume_changes"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     tools:layout_editor_absoluteX="130dp"
                     tools:layout_editor_absoluteY="193dp" />
 
@@ -131,18 +160,24 @@
                     android:id="@+id/seekBar"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:visibility="invisible" />
 
                 <Button
                     android:id="@+id/btnWifi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:text="@string/wifi_changes" />
 
                 <Switch
                     android:id="@+id/switchWifi"
                     android:layout_width="match_parent"
                     android:layout_height="61dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:text="@string/wifi_should_be"
                     android:textSize="18sp"
                     android:visibility="invisible"
@@ -153,6 +188,8 @@
                     android:id="@+id/btnBluetooth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:text="@string/bluetooth_changes" />
 
                 <Switch
@@ -161,6 +198,8 @@
                     android:layout_height="61dp"
                     android:text="@string/bluetooth_should_be"
                     android:textSize="18sp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:visibility="invisible"
                     tools:layout_editor_absoluteX="153dp"
                     tools:layout_editor_absoluteY="386dp" />
